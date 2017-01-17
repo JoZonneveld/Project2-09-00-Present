@@ -1,1 +1,4 @@
-# python code
+import pygame
+from program import *
+
+program()
