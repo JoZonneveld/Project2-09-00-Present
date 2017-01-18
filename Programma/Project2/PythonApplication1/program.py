@@ -43,14 +43,14 @@ class start_button():
         click = pygame.mouse.get_pressed()
 
         if 300+100 > mouse[0] > 300 and 450+100 > mouse[1] > 450:
-            pygame.draw.rect(screen, hover_green, (300, 450, 100, 50))
-            
+            pygame.draw.rect(screen, hover_grey, (512, 384, 100, 50))
+
         else:
-            pygame.draw.rect(screen,green, (300, 450, 100, 50))
+            pygame.draw.rect(screen,grey, (512, 384, 100, 50))
 
         smallText = pygame.font.Font("freesansbold.ttf",14)
         textSurf, textRect = self.text_objects("Start", smallText)
-        textRect.center = ( (300+(50/2)), (450+(50/2)) )
+        textRect.center = ( (512+(50/2)), (512+(50/2)) )
         screen.blit(textSurf, textRect)
 
         if click[0] == 1:
