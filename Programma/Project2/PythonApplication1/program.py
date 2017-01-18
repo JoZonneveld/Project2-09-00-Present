@@ -19,12 +19,13 @@ class Background(pygame.sprite.Sprite):
 
 BackGround = Background('gif/water.jpg', [0,0])
 
-class start_button():
+
+class Button:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
-    def draw_button(self, screen, x, y, b, h):
+    def Start(self, screen, x, y, b, h):
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -40,14 +41,8 @@ class start_button():
         screen.blit(textSurf, textRect)
         if click[0] == 1:
             pass
-
-class setting_button():
-    def text_objects(self, text, font):
-        textSurface = font.render(text, True, (0, 0, 0))
-        return textSurface, textSurface.get_rect()
-
-    def draw_button(self, screen, x, y, b, h):
-
+   
+    def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -64,13 +59,7 @@ class setting_button():
         if click[0] == 1:
             pass
 
-class quit_button():
-    def text_objects(self, text, font):
-        textSurface = font.render(text, True, black)
-        return textSurface, textSurface.get_rect()
-
-    def draw_button(self, screen, x, y, b, h):
-
+    def Exit(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -88,7 +77,6 @@ class quit_button():
             pygame.quit()
 
 
-
 def program():
     pygame.init()
 
@@ -98,14 +86,7 @@ def program():
     size = (width, height)
 
     screen = pygame.display.set_mode(size)
-
-    start = start_button()
-    setting = setting_button()
-    quit = quit_button()
-
-
-
-    start = start_button()
+    button = Button()
 
     while process_events():
         pygame.display.set_caption('Battleport')
@@ -113,9 +94,8 @@ def program():
         screen.fill(black)
         screen.blit(BackGround.image, BackGround.rect)
 
-        start.draw_button(screen, 350, 250, 300, 70)
-        setting.draw_button(screen, 350, 350, 300, 70)
-        quit.draw_button(screen, 350, 450, 300, 70)
-
+        button.Start(screen, 350, 250, 300, 70)
+        button.Setting(screen, 350, 350, 300, 70)
+        button.Exit(screen, 350, 450, 300, 70)
 
         pygame.display.flip()
