@@ -15,12 +15,13 @@ class Button:
         else:
             pygame.draw.rect(screen, grey, (x, y, b, h))
 
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            print("click")
+
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Start", smallText)
         textRect.center = ((475 + (50 / 2)), (260 + (50 / 2)))
         screen.blit(textSurf, textRect)
-        if click[0] == 1:
-            pass
 
     def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
