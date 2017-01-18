@@ -1,3 +1,5 @@
+import pygame
+from Color import *
 class Button:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
