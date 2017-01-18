@@ -32,6 +32,7 @@ class quit_button():
         if click[0] == 1:
                 pygame.quit()
 
+<<<<<<< HEAD
 class start_button():
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0,0,0))
@@ -56,6 +57,8 @@ class start_button():
         if click[0] == 1:
                 pass
 
+=======
+>>>>>>> origin/master
 def program():
     pygame.init()
 
@@ -67,13 +70,10 @@ def program():
     screen = pygame.display.set_mode(size)
 
     quit = quit_button()
-
-    start = start_button()
     
     while process_events():
         screen.fill(Deep_Sky_Blue)
 
         quit.draw_button(screen)
-        start.draw_button(screen)
 
         pygame.display.flip()
