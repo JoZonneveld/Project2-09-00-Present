@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Programma$Game.coverage" NAME="Game Coverage Results" MODIFIED="1484743245646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project2/PythonApplication1" />
+    <SUITE FILE_PATH="coverage/Programma$Game.coverage" NAME="Game Coverage Results" MODIFIED="1484747170253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Project2/PythonApplication1" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -27,9 +27,15 @@
       <file leaf-file-name="program.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Project2/PythonApplication1/program.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="924">
+              <caret line="115" column="7" selection-start-line="115" selection-start-column="7" selection-end-line="117" selection-end-column="51" />
+              <folding>
+                <element signature="e#62#191#0" expanded="false" />
+                <element signature="e#237#490#0" expanded="false" />
+                <element signature="e#568#1352#0" expanded="false" />
+                <element signature="e#1382#2169#0" expanded="false" />
+                <element signature="e#2196#2943#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,6 +114,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -160,8 +168,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -462,6 +468,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#62#191#0" expanded="false" />
+            <element signature="e#237#490#0" expanded="false" />
+            <element signature="e#568#1352#0" expanded="false" />
+            <element signature="e#1382#2169#0" expanded="false" />
+            <element signature="e#2196#2943#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project2/PythonApplication1/Game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project2/PythonApplication1/Color.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -470,7 +498,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#62#191#0" expanded="false" />
+            <element signature="e#237#490#0" expanded="false" />
+            <element signature="e#568#1352#0" expanded="false" />
+            <element signature="e#1382#2169#0" expanded="false" />
+            <element signature="e#2196#2943#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -478,7 +512,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#62#191#0" expanded="false" />
+            <element signature="e#237#490#0" expanded="false" />
+            <element signature="e#568#1352#0" expanded="false" />
+            <element signature="e#1382#2169#0" expanded="false" />
+            <element signature="e#2196#2943#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Project2/PythonApplication1/program.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#62#191#0" expanded="false" />
+            <element signature="e#237#490#0" expanded="false" />
+            <element signature="e#568#1352#0" expanded="false" />
+            <element signature="e#1382#2169#0" expanded="false" />
+            <element signature="e#2196#2943#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -501,9 +555,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Project2/PythonApplication1/program.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="924">
+          <caret line="115" column="7" selection-start-line="115" selection-start-column="7" selection-end-line="117" selection-end-column="51" />
+          <folding>
+            <element signature="e#62#191#0" expanded="false" />
+            <element signature="e#237#490#0" expanded="false" />
+            <element signature="e#568#1352#0" expanded="false" />
+            <element signature="e#1382#2169#0" expanded="false" />
+            <element signature="e#2196#2943#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
