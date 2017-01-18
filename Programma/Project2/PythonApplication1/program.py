@@ -32,13 +32,15 @@ def program():
     button = Button()
 
     while process_events():
+        
         pygame.display.set_caption('Battleport')
-
+        
         screen.fill(black)
         screen.blit(BackGround.image, BackGround.rect)
 
         button.Start(screen, 350, 250, 300, 70)
         button.Setting(screen, 350, 350, 300, 70)
         button.Exit(screen, 350, 450, 300, 70)
-
-        pygame.display.flip()
+        pygame.display.update()
+        
+    pygame.quit()
