@@ -24,6 +24,23 @@ class Button:
         textRect.center = ((475 + (50 / 2)), (260 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
+    def Rules(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:
+            pygame.draw.rect(screen, hover_grey, (x, y, b, h))
+        else:
+            pygame.draw.rect(screen, grey, (x, y, b, h))
+
+        smallText = pygame.font.Font("freesansbold.ttf", 18)
+        textSurf, textRect = self.text_objects("Rules", smallText)
+        textRect.center = ((47 + (50 / 2)), (35 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            print("click")
+
     def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -34,7 +51,7 @@ class Button:
             pygame.draw.rect(screen, grey, (x, y, b, h))
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("Setting", smallText)
+        textSurf, textRect = self.text_objects("Settings", smallText)
         textRect.center = ((475 + (50 / 2)), (360 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
