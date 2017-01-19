@@ -1,3 +1,5 @@
+import pygame
+pygame.init()
 black = (0,0,0)
 
 red = (255, 0, 0)

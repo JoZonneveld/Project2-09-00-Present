@@ -1,5 +1,6 @@
 import pygame
 from Color import *
+pygame.init()
 class Button:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
@@ -37,8 +38,8 @@ class Button:
         textRect.center = ((475 + (50 / 2)), (360 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
-        if click[0] == 1:
-            pass
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            print("click")
 
     def Exit(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -54,5 +55,6 @@ class Button:
         textRect.center = ((475 + (50 / 2)), (460 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
-        if click[0] == 1:
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            print("click")
             pygame.quit()
