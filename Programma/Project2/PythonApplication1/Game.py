@@ -1,4 +1,9 @@
 from Color import *
+from main_screen import *
+from Rules import *
+from Quit import *
+from Settings import *
+from Main_game import *
 import pygame
 pygame.init()
 
@@ -104,55 +109,11 @@ class Background(pygame.sprite.Sprite):
 
 BackGround = Background('gif/water.jpg', [0, 0])
 
-def main_screen():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        screen.blit(BackGround.image, BackGround.rect)
 
-        button.Start(screen, 350, 250, 300, 70)
-        button.Rules(screen, 25, 25, 100, 70)
-        button.Setting(screen, 350, 350, 300, 70)
-        button.Exit(screen, 350, 450, 300, 70)
-        pygame.display.update()
-
-    pygame.quit()
-
-def Rules():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        screen.blit(BackGround.image, BackGround.rect)
-
-
-        pygame.display.update()
-
-def Game():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        screen.blit(BackGround.image, BackGround.rect)
-
-
-        pygame.display.update()
-
-def Settings():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-
-
-        pygame.display.update()
-
-def Quit():
-    pygame.quit()
-
-
-
-
+Proccess = process_events()
 #screens
-main_screen()
-Game()
-Rules()
-Settings()
-Quit()
+main_screen(screen, BackGround, button, Proccess)
+Main_game(screen, BackGround, button, Proccess)
+Rules(screen, BackGround, button, Proccess)
+Settings(screen, BackGround, button, Proccess)
+Quit(screen, BackGround, button, Proccess)
