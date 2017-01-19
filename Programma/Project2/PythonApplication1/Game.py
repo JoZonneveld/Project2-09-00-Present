@@ -24,7 +24,7 @@ class Button:
             pygame.draw.rect(screen, grey, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            main_game(screen)
+            main_game(screen, button)
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Start", smallText)
@@ -63,7 +63,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Settings(screen)
+            Settings(screen, button)
 
     def Exit(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -81,6 +81,22 @@ class Button:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             Quit()
+
+    def Back(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_grey, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, grey, (x, y, b, h))
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            main_screen(screen, BackGround, button)
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Back", smallText)
+        textRect.center = ((920 + (50 / 2)), (35 + (50 / 2)))
+        screen.blit(textSurf, textRect)
 
 #game width
 width = 1024
@@ -111,7 +127,7 @@ BackGround = Background('gif/water.jpg', [0, 0])
 
 #screens
 main_screen(screen, BackGround, button)
-main_game(screen)
+main_game(screen, button)
 Rules(screen)
-Settings(screen)
+Settings(screen, button)
 Quit()
