@@ -1,5 +1,10 @@
 import pygame
 from Color import *
+from main_screen import *
+from Rules import *
+from main_game import *
+from Settings import *
+from Quit import *
 pygame.init()
 
 #game buttons
@@ -19,7 +24,7 @@ class Button:
             pygame.draw.rect(screen, grey, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            main_game()
+            main_game(screen)
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Start", smallText)
@@ -41,7 +46,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Rules()
+            Rules(screen)
 
     def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -58,7 +63,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Settings()
+            Settings(screen)
 
     def Exit(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -104,50 +109,9 @@ class Background(pygame.sprite.Sprite):
 
 BackGround = Background('gif/water.jpg', [0, 0])
 
-
-Proccess = process_events()
-def main_screen():
-    while process_events():
-
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        screen.blit(BackGround.image, BackGround.rect)
-
-        button.Start(screen, 350, 250, 300, 70)
-        button.Rules(screen, 25, 25, 100, 70)
-        button.Setting(screen, 350, 350, 300, 70)
-        button.Exit(screen, 350, 450, 300, 70)
-        pygame.display.update()
-
-    pygame.quit()
-
-def Rules():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        pygame.display.update()
-
-def Settings():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        pygame.display.update()
-
-def main_game():
-    while process_events():
-        pygame.display.set_caption('Battleport')
-        screen.fill(black)
-        pygame.display.update()
-
-
-
-def Quit():
-    pygame.quit()
-
-
 #screens
-main_screen()
-main_game()
-Rules()
-Settings()
+main_screen(screen, BackGround, button)
+main_game(screen)
+Rules(screen)
+Settings(screen)
 Quit()
