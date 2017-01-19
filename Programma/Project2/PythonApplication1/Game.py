@@ -1,10 +1,5 @@
-from Color import *
-from main_screen import *
-from Rules import *
-from Quit import *
-from Settings import *
-from Main_game import *
 import pygame
+from Color import *
 pygame.init()
 
 #game buttons
@@ -24,7 +19,7 @@ class Button:
             pygame.draw.rect(screen, grey, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Game()
+            main_game()
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Start", smallText)
@@ -111,9 +106,48 @@ BackGround = Background('gif/water.jpg', [0, 0])
 
 
 Proccess = process_events()
+def main_screen():
+    while process_events():
+
+        pygame.display.set_caption('Battleport')
+        screen.fill(black)
+        screen.blit(BackGround.image, BackGround.rect)
+
+        button.Start(screen, 350, 250, 300, 70)
+        button.Rules(screen, 25, 25, 100, 70)
+        button.Setting(screen, 350, 350, 300, 70)
+        button.Exit(screen, 350, 450, 300, 70)
+        pygame.display.update()
+
+    pygame.quit()
+
+def Rules():
+    while process_events():
+        pygame.display.set_caption('Battleport')
+        screen.fill(black)
+        pygame.display.update()
+
+def Settings():
+    while process_events():
+        pygame.display.set_caption('Battleport')
+        screen.fill(black)
+        pygame.display.update()
+
+def main_game():
+    while process_events():
+        pygame.display.set_caption('Battleport')
+        screen.fill(black)
+        pygame.display.update()
+
+
+
+def Quit():
+    pygame.quit()
+
+
 #screens
-main_screen(screen, BackGround, button, Proccess)
-Main_game(screen, BackGround, button, Proccess)
-Rules(screen, BackGround, button, Proccess)
-Settings(screen, BackGround, button, Proccess)
-Quit(screen, BackGround, button, Proccess)
+main_screen()
+main_game()
+Rules()
+Settings()
+Quit()
