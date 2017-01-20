@@ -105,7 +105,7 @@ size = (width, height)
 
 screen = pygame.display.set_mode(size)
 button = Button()
-pygame.mixer.music.load("gif/mp3/test_1.mp3")
+pygame.mixer.music.load("gif/mp3/Dank.mp3")
 pygame.mixer.music.play(-1,0.0)
 
 circle = pygame.draw.circle(screen, (50,30,90),(90,30),16,5)
