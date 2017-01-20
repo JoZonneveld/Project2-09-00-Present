@@ -46,7 +46,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Rules(screen)
+            Rules(screen, BackGround_Rules)
 
     def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -124,10 +124,12 @@ class Background(pygame.sprite.Sprite):
 
 
 BackGround = Background('gif/water.jpg', [0, 0])
+BackGround_Rules = Background('gif/rules3.jpg', [105, 0])
+
 
 #screens
 main_screen(screen, BackGround, button)
 main_game(screen, button)
-Rules(screen)
 Settings(screen, button)
+Rules(screen, BackGround_Rules)
 Quit()
