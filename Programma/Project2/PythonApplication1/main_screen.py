@@ -11,7 +11,7 @@ def process_events():
 def main_screen(screen, BackGround, button):
     while process_events():
 
-        pygame.display.set_caption('Battleport')
+        pygame.display.set_caption('Mainscreen')
         screen.fill(black)
         screen.blit(BackGround.image, BackGround.rect)
 

@@ -10,6 +10,6 @@ def process_events():
 
 def Rules(screen):
     while process_events():
-        pygame.display.set_caption('Battleport')
+        pygame.display.set_caption('Rules')
         screen.fill(black)
         pygame.display.update()
