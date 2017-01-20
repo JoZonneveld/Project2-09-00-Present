@@ -9,4 +9,4 @@ def process_events():
     return True
 
 def Quit():
-    pygame.quit()
+    quit()
