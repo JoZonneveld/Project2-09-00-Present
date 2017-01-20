@@ -11,8 +11,6 @@ def process_events():
 
 def main_screen(screen, BackGround, button, circle):
     while process_events():
-
-
         pygame.display.set_caption('Mainscreen')
         screen.fill(black)
         screen.blit(BackGround.image, BackGround.rect)
