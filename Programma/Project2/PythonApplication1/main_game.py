@@ -14,3 +14,4 @@ def main_game(screen, button):
         screen.fill(black)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
+    pygame.quit()

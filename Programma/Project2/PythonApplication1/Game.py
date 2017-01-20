@@ -46,7 +46,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Rules(screen, BackGround_Rules)
+            Rules(screen, BackGround_Rules, button)
 
     def Setting(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
