@@ -1,6 +1,5 @@
 import pygame
 from Color import *
-from  Music import *
 
 def process_events():
     pygame.init()
