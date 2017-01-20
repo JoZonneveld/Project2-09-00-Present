@@ -124,7 +124,7 @@ class Background(pygame.sprite.Sprite):
 
 
 BackGround = Background('gif/water.jpg', [0, 0])
-BackGround_Rules = Background('gif/rules3.jpg', [105, 0])
+BackGround_Rules = Background('gif/ruls.jpg', [105, 0])
 
 
 #screens
