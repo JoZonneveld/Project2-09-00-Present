@@ -91,7 +91,7 @@ class Button:
         else:
             pygame.draw.rect(screen, grey, (x, y, b, h))
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            main_screen(screen, BackGround, button)
+            main_screen(screen, BackGround, button, circle)
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Back", smallText)
@@ -105,6 +105,11 @@ size = (width, height)
 
 screen = pygame.display.set_mode(size)
 button = Button()
+pygame.mixer.music.load("gif/mp3/test_1.mp3")
+pygame.mixer.music.play(-1,0.0)
+
+circle = pygame.draw.circle(screen, (50,30,90),(90,30),16,5)
+
 
 
 def process_events():
@@ -128,7 +133,7 @@ BackGround_Rules = Background('gif/ruls.jpg', [105, 0])
 
 
 #screens
-main_screen(screen, BackGround, button)
+main_screen(screen, BackGround, button, circle)
 main_game(screen, button)
 Settings(screen, button)
 Rules(screen, BackGround_Rules)
