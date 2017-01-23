@@ -1,24 +1,99 @@
 /* create tables */
 
-CREATE TABLE IF NOT EXISTS NormalDeck(
+/*CREATE TABLE IF NOT EXISTS NormalDeck(
+    cardSort varchar(30),
 	card_id serial,
     cardName varchar(30),
     aantal integer,
     Primary Key(card_id)
-);
+);*/
 
-CREATE TABLE IF NOT EXISTS SpecialDeck(
+/*CREATE TABLE IF NOT EXISTS SpecialDeck(
     card_id serial,
     cardName varchar(30),
     aantal integer,
     Primary Key(card_id)
-);
+);*/
 
-CREATE TABLE IF NOT EXISTS Highscore(
+/*CREATE TABLE IF NOT EXISTS Highscore(
     id serial,
     playername varchar(30),
     beurten integer,
     Primary Key(id)
-);
+);*/
 
-INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);
+/*INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);*/
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Offensive', 001, 'FMJ upgrade', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Offensive', 002, 'Rifling', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Offensive', 003,'Advanced Rifling', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Offensive', 004, 'Naval Mine', 6);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Offensive', 005, 'EMP upgrade', 4);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Defensive', 011, 'Reinforced Hull', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Defensive', 012,'Sonar', 4);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Defensive', 013, 'Smokescreen', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Defensive', 014, 'Sabotage', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Support', 021, 'Backup', 2);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Support', 022, 'Extra Fuel II', 4);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Support', 023, 'Extra Fuel', 6);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Support', 024, 'Rally', 1);
+
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+VALUES ('Support', 025, 'Adrenaline Rush', 4);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (100, 'Repair', 2);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (101, 'Flak Armor', 2);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (102, 'Hack Intel',1);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (103, 'Far Sight', 1);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (104, 'Aluminium Hull', 1);
+
+INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
+VALUES (105, 'Jack Sparrow', 1);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
