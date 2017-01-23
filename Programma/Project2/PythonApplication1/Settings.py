@@ -14,4 +14,6 @@ def Settings(screen, button, BackGround_Settings):
         screen.fill(black)
         screen.blit(BackGround_Settings.image, BackGround_Settings.rect)
         button.Back(screen, 900, 25, 100, 70)
+        button.On(screen, 550, 280, 100, 70)
+        button.Off(screen, 670, 280, 100, 70)
         pygame.display.update()
