@@ -9,7 +9,7 @@ def process_events():
     return True
 
 def main_game(screen, button, BackGround_Game):
-    upload_score()
+    upload_score('test', 5)
     while process_events():
         pygame.display.set_caption('Battleport')
         screen.blit(BackGround_Game.image, BackGround_Game.rect)

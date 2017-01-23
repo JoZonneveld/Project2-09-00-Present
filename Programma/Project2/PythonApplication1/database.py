@@ -31,9 +31,13 @@ def interact_with_database(command):
 
 
 # Uploads a score into the hiscore table
-def upload_score():
-    interact_with_database("INSERT INTO highscore (playername, beurten) VALUES('joost', 1)")
+def upload_score(playername, beurten):
+    connection = psycopg2.connect("dbname=Battleport user=postgres password=root")
+    cursor = connection.cursor()
 
+    # Execute the command
+    cursor.execute("""INSERT INTO highscore (playername, beurten) VALUES(%(name)s, %(turn)s);""",{'name': playername, 'turn': beurten})
+    connection.commit()
 
 # Downloads score data from database
 def download_scores():
