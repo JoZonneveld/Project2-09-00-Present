@@ -25,7 +25,7 @@ class Button:
             pygame.draw.rect(screen, green, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            pass
+            pygame.mixer.music.unpause()
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("ON", smallText)
@@ -43,7 +43,7 @@ class Button:
             pygame.draw.rect(screen, red, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            pass
+            pygame.mixer.music.pause()
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("OFF", smallText)
