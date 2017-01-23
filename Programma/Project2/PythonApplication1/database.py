@@ -36,7 +36,8 @@ def upload_score(playername, beurten):
     cursor = connection.cursor()
 
     # Execute the command
-    cursor.execute("""INSERT INTO highscore (playername, beurten) VALUES(%(name)s, %(turn)s);""",{'name': playername, 'turn': beurten})
+    cursor.execute("""INSERT INTO highscore (playername, beurten) VALUES(%(name)s, %(turn)s);""",
+                   {'name': playername, 'turn': beurten})
     connection.commit()
 
 # Downloads score data from database
