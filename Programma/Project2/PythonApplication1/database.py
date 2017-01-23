@@ -31,9 +31,8 @@ def interact_with_database(command):
 
 
 # Uploads a score into the hiscore table
-def upload_score(playername, beurten):
-    interact_with_database("INSERT INTO Highscore VALUES beurten = {} WHERE playername = '{}'"
-                           .format(playername, beurten))
+def upload_score():
+    interact_with_database("INSERT INTO highscore (playername, beurten) VALUES('joost', 1)")
 
 
 # Downloads score data from database
