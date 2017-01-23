@@ -1,6 +1,6 @@
 import pygame
 from Color import *
-
+from  Music import *
 
 def process_events():
     pygame.init()
@@ -9,14 +9,11 @@ def process_events():
             return False
     return True
 
-def Rules(screen, BackGround_Rules, button):
+def Score(screen, button):
     while process_events():
         pygame.display.set_caption('Battleport')
         screen.fill(black)
-        screen.blit(BackGround_Rules.image, BackGround_Rules.rect)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
 
-
-
-
+    pygame.quit()

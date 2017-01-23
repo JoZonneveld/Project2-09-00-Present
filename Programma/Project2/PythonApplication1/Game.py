@@ -4,6 +4,7 @@ from main_screen import *
 from Rules import *
 from main_game import *
 from Settings import *
+from Score import *
 from Quit import *
 pygame.init()
 
@@ -82,6 +83,23 @@ class Button:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             Quit()
 
+    def Score(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:
+            pygame.draw.rect(screen, hover_grey, (x, y, b, h))
+        else:
+            pygame.draw.rect(screen, grey, (x, y, b, h))
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Highscore", smallText)
+        textRect.center = ((70 + (50 / 2)), (660 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            Score(screen, button)
+
     def Back(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -137,4 +155,5 @@ main_screen(screen, BackGround, button, circle)
 main_game(screen, button)
 Settings(screen, button)
 Rules(screen, BackGround_Rules)
+Score(screen, button)
 Quit()
