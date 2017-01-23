@@ -11,6 +11,7 @@ def process_events():
 
 def Score(screen, button):
     while process_events():
+
         pygame.display.set_caption('Battleport')
         screen.fill(black)
         button.Back(screen, 900, 25, 100, 70)

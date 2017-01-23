@@ -8,7 +8,7 @@ import psycopg2
 # Use the database
 def interact_with_database(command):
     # Connect and set up cursor
-    connection = psycopg2.connect("dbname=Battleport user=postgres")
+    connection = psycopg2.connect("dbname=Battleport user=postgres password=root")
     cursor = connection.cursor()
 
     # Execute the command
@@ -31,9 +31,9 @@ def interact_with_database(command):
 
 
 # Uploads a score into the hiscore table
-def upload_score(name, score):
-    interact_with_database("UPDATE Highscore SET beurten = {} WHERE name = '{}'"
-                           .format(score, name))
+def upload_score(playername, beurten):
+    interact_with_database("INSERT INTO Highscore VALUES beurten = {} WHERE playername = '{}'"
+                           .format(playername, beurten))
 
 
 # Downloads score data from database
