@@ -6,10 +6,12 @@ from main_game import *
 from Settings import *
 from Score import *
 from Quit import *
+from database import *
 pygame.init()
 
 #game buttons
 class Button:
+
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
