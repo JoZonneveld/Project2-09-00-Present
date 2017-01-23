@@ -1,30 +1,30 @@
 /* create tables */
 
-/*CREATE TABLE IF NOT EXISTS NormalDeck(
+CREATE TABLE IF NOT EXISTS NormalDeck(
     cardSort varchar(30),
 	card_id serial,
     cardName varchar(30),
     aantal integer,
     Primary Key(card_id)
-);*/
+);
 
-/*CREATE TABLE IF NOT EXISTS SpecialDeck(
+CREATE TABLE IF NOT EXISTS SpecialDeck(
     card_id serial,
     cardName varchar(30),
     aantal integer,
     Primary Key(card_id)
-);*/
+);
 
-/*CREATE TABLE IF NOT EXISTS Highscore(
+CREATE TABLE IF NOT EXISTS Highscore(
     id serial,
     playername varchar(30),
     beurten integer,
     Primary Key(id)
-);*/
+);
 
-/*INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);*/
+INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);
 
-/*INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
 VALUES ('Offensive', 001, 'FMJ upgrade', 2);
 
 INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
@@ -82,18 +82,5 @@ INSERT INTO  SpecialDeck (card_id, cardName, aantal)
 VALUES (104, 'Aluminium Hull', 1);
 
 INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
-VALUES (105, 'Jack Sparrow', 1);*/
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+VALUES (105, 'Jack Sparrow', 1);
         
