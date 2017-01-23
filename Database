@@ -1,0 +1,24 @@
+/* create tables */
+
+CREATE TABLE IF NOT EXISTS NormalDeck(
+	card_id serial,
+    cardName varchar(30),
+    aantal integer,
+    Primary Key(card_id)
+);
+
+CREATE TABLE IF NOT EXISTS SpecialDeck(
+    card_id serial,
+    cardName varchar(30),
+    aantal integer,
+    Primary Key(card_id)
+);
+
+CREATE TABLE IF NOT EXISTS Highscore(
+    id serial,
+    playername varchar(30),
+    beurten integer,
+    Primary Key(id)
+);
+
+INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);
