@@ -24,7 +24,7 @@
 
 /*INSERT INTO Highscore (playername, beurten) VALUES('Naam', 3);*/
 
-INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
+/*INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
 VALUES ('Offensive', 001, 'FMJ upgrade', 2);
 
 INSERT INTO  NormalDeck (cardSort,card_id, cardName, aantal) 
@@ -82,7 +82,7 @@ INSERT INTO  SpecialDeck (card_id, cardName, aantal)
 VALUES (104, 'Aluminium Hull', 1);
 
 INSERT INTO  SpecialDeck (card_id, cardName, aantal) 
-VALUES (105, 'Jack Sparrow', 1);
+VALUES (105, 'Jack Sparrow', 1);*/
         
         
         
