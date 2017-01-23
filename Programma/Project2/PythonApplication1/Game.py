@@ -16,6 +16,43 @@ class Button:
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
+    def On(self, screen, x, y, b, h):
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, green, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            pygame.mixer.music.unpause()
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("ON", smallText)
+        textRect.center = ((575 + (50 / 2)), (290 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def Off(self, screen, x, y, b, h):
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, red, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            pygame.mixer.music.pause()
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("OFF", smallText)
+        textRect.center = ((690 + (50 / 2)), (290 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+
     def Start(self, screen, x, y, b, h):
 
         mouse = pygame.mouse.get_pos()
@@ -66,7 +103,7 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Settings(screen, button, BackGround)
+            Settings(screen, button, BackGround_Settings)
 
     def Exit(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
