@@ -1,5 +1,7 @@
 import pygame
 from Color import *
+from database import *
+from astropy import Table, Column
 
 def process_events():
     pygame.init()
@@ -9,11 +11,15 @@ def process_events():
     return True
 
 def Score(screen, button):
-    while process_events():
+    data_rows = [download_scores()]
 
+    t = Table(rows=data_rows, names=('a', 'b', 'c'))
+
+    print(t)
+
+    while process_events():
         pygame.display.set_caption('Battleport')
         screen.fill(black)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
-
     pygame.quit()
