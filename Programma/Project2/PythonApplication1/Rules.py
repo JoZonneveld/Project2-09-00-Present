@@ -16,6 +16,7 @@ def Rules(screen, BackGround_Rules, button):
         screen.blit(BackGround_Rules.image, BackGround_Rules.rect)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
+    quit()
 
 
 
