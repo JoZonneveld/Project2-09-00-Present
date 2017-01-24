@@ -1,5 +1,8 @@
+from msilib import Table
+
 import pygame
 from Color import *
+from database import *
 
 def process_events():
     pygame.init()
@@ -9,11 +12,15 @@ def process_events():
     return True
 
 def Score(screen, button):
-    while process_events():
+    print("Naam", " Beurten")
+    for row in download_scores():
+        print(row[1], row[2])
 
+
+
+    while process_events():
         pygame.display.set_caption('Battleport')
         screen.fill(black)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
-
-    pygame.quit()
+    quit()

@@ -21,4 +21,4 @@ def main_screen(screen, BackGround, button, circle):
         button.Exit(screen, 350, 450, 300, 70)
         pygame.display.update()
 
-    pygame.quit()
+    quit()
