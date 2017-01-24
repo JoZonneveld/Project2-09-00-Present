@@ -40,6 +40,9 @@ def upload_score(playername, beurten):
 def download_scores():
     return interact_with_database("SELECT * FROM Highscore ORDER BY beurten LIMIT 5")
 
+def cards():
+    return interact_with_database("")
+
 
 # Downloads the top score from database
 def download_top_score():
