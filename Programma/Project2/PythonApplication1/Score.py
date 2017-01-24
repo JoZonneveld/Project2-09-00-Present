@@ -1,7 +1,8 @@
+from msilib import Table
+
 import pygame
 from Color import *
 from database import *
-from astropy import Table, Column
 
 def process_events():
     pygame.init()
@@ -11,15 +12,15 @@ def process_events():
     return True
 
 def Score(screen, button):
-    data_rows = [download_scores()]
+    print("Naam", " Beurten")
+    for row in download_scores():
+        print(row[1], row[2])
 
-    t = Table(rows=data_rows, names=('a', 'b', 'c'))
 
-    print(t)
 
     while process_events():
         pygame.display.set_caption('Battleport')
         screen.fill(black)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
-    pygame.quit()
+    quit()

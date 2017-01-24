@@ -17,3 +17,4 @@ def Settings(screen, button, BackGround_Settings):
         button.On(screen, 550, 280, 100, 70)
         button.Off(screen, 670, 280, 100, 70)
         pygame.display.update()
+    quit()

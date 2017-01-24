@@ -15,4 +15,4 @@ def main_game(screen, button, BackGround_Game):
         screen.blit(BackGround_Game.image, BackGround_Game.rect)
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
-    pygame.quit()
+    quit()
