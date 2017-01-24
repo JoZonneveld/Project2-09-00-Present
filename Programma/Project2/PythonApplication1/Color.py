@@ -1,6 +1,7 @@
 import pygame
 pygame.init()
 black = (0,0,0)
+white = (255,255,255)
 
 red = (255, 0, 0)
 hover_red = (200, 0, 0)
