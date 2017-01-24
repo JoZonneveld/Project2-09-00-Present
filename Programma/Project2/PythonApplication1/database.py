@@ -49,3 +49,8 @@ def download_scores():
 def download_top_score():
     result = interact_with_database("SELECT * FROM Highscore ORDER BY beurten")[0][1]
     return result
+
+# Downloads all the cards from the database
+# def download_cards():
+#    result = interact_with_database("SELECT * FROM Cards")
+#    return result
