@@ -5,9 +5,9 @@ pygame.init()
 clock = pygame.time.Clock()
 Screen = pygame.display.set_mode([1024, 768])
 Done = False
-MapSize = 20
+MapSize = 21
 
-TileWidth = 43
+TileWidth = 32
 TileHeight = 32
 TileMargin = 1
 
@@ -15,7 +15,6 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
-BLUE = (0, 0, 255)
 
 
 
@@ -27,11 +26,11 @@ class MapTile(object):
 
 
 class Character(object):
-    def __init__(self, Name, HP, Column, Row):
+    def __init__(self, Name, HP, column, row):
         self.Name = Name
         self.HP = HP
-        self.Column = Column
-        self.Row = Row
+        self.Row = row
+        self.Column = column
 
     def Move(self, Direction):
 
@@ -91,9 +90,7 @@ class Map(object):
             TempTile = MapTile("WaterTile", Column, Row)
             Grid[Column][Row].append(TempTile)
 
-    RandomRow = random.randint(0, MapSize - 1)
-    RandomColumn = random.randint(0, MapSize - 1)
-    Hero = Character("Hero", 10, RandomColumn, RandomRow)
+    Boat = Character("Boat", 10, 5, 20)
 
     def update(self):
 
@@ -102,9 +99,9 @@ class Map(object):
                 for i in range(len(Map.Grid[Column][Row])):
                     if Map.Grid[Column][Row][i].Column != Column:
                         Map.Grid[Column][Row].remove(Map.Grid[Column][Row][i])
-                    elif Map.Grid[Column][Row][i].Name == "Hero":
+                    elif Map.Grid[Column][Row][i].Name == "Boat":
                         Map.Grid[Column][Row].remove(Map.Grid[Column][Row][i])
-        Map.Grid[int(Map.Hero.Column)][int(Map.Hero.Row)].append(Map.Hero)
+        Map.Grid[int(Map.Boat.Column)][int(Map.Boat.Row)].append(Map.Boat)
 
 Map = Map()
 
@@ -125,23 +122,23 @@ while not Done:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                Map.Hero.Move("LEFT")
+                Map.Boat.Move("LEFT")
             if event.key == pygame.K_RIGHT:
-                Map.Hero.Move("RIGHT")
+                Map.Boat.Move("RIGHT")
             if event.key == pygame.K_UP:
-                Map.Hero.Move("UP")
+                Map.Boat.Move("UP")
             if event.key == pygame.K_DOWN:
-                Map.Hero.Move("DOWN")
+                Map.Boat.Move("DOWN")
 
     Screen.fill(BLACK)
 
-    for Row in range(MapSize):           # Drawing grid
+    for Row in range(MapSize):
         for Column in range(MapSize):
             for i in range(0, len(Map.Grid[Column][Row])):
                 Color = WHITE
                 if len(Map.Grid[Column][Row]) == 2:
                     Color = RED
-                if Map.Grid[Column][Row][i].Name == "Hero":
+                if Map.Grid[Column][Row][i].Name == "Boat":
                     Color = GREEN
 
 
