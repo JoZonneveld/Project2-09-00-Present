@@ -1,6 +1,6 @@
 import pygame
 from Color import *
-
+music = True
 def process_events():
     pygame.init()
     for event in pygame.event.get():

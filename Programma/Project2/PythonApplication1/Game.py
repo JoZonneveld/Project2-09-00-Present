@@ -11,13 +11,12 @@ pygame.init()
 
 #game buttons
 class Button:
-
+    music = True
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
     def On(self, screen, x, y, b, h):
-
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -28,6 +27,7 @@ class Button:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             pygame.mixer.music.unpause()
+
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("ON", smallText)
