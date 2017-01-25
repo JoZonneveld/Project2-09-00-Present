@@ -15,10 +15,11 @@ class Cards:
         card = self.cards[random]
         return card
 
-    def draw_card(self):
+    def drew_card(self):
         self.Amount -= 1
-    # def update_card(self):
-        # self.cardCount =-1
+
+    def update_card(self):
+        self.cardAmount =- 1
 
 
 
