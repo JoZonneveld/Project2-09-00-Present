@@ -16,3 +16,4 @@ def main_game(screen, button, BackGround_Game):
         button.Back(screen, 900, 25, 100, 70)
         pygame.display.update()
     pygame.quit()
+
