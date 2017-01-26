@@ -49,12 +49,27 @@ def main_game(screen, button, BackGround_Game):
                 self.VRange = VRange
 
             def MoveUp(self):
+                self.able = True
                 for i in self.PositionList:
-                    i.y -= 1
+                    if i.y == 0:
+                        self.able = False
+                if self.able == True and self.Move != 0:
+                    for i in self.PositionList:
+                        i.y -= 1
+                    self.Move -= 1
 
             def MoveDown(self):
+                self.able = True
                 for i in self.PositionList:
-                    i.y += 1
+                    if i.y == 20:
+                        self.able = False
+                if self.able == True and self.Move != 0:
+                    for i in self.PositionList:
+                        i.y += 1
+                    self.Move -= 1
+
+            def EndTurn(self):
+                pass
 
             def Move(self, Direction):
                 if Direction == "UP":
@@ -180,10 +195,10 @@ def main_game(screen, button, BackGround_Game):
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_UP]:
-                MerapiP1.MoveUp()
+                Furgo_SaltireP1.MoveUp()
                 print("up")
             elif keys[pygame.K_DOWN]:
-                MerapiP1.MoveDown()
+                Furgo_SaltireP1.MoveDown()
                 print("down")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -202,10 +217,10 @@ def main_game(screen, button, BackGround_Game):
                                                      TileWidth,
                                                      TileHeight])
 
-            for positionnumber in range(0, len(MerapiP1.PositionList)):  # determines length of boat
-                x = MerapiP1.PositionList[positionnumber].x
-                y = MerapiP1.PositionList[positionnumber].y
-                color = MerapiP1.Color
+            for positionnumber in range(0, len(Furgo_SaltireP1.PositionList)):  # determines length of boat
+                x = Furgo_SaltireP1.PositionList[positionnumber].x
+                y = Furgo_SaltireP1.PositionList[positionnumber].y
+                color = Furgo_SaltireP1.Color
                 pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
                                                  (TileMargin + TileHeight) * y + TileMargin,
                                                  TileWidth,
