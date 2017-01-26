@@ -14,7 +14,7 @@ def Rules(screen, BackGround_Rules, button):
         pygame.display.set_caption('Battleport')
         screen.fill(black)
         screen.blit(BackGround_Rules.image, BackGround_Rules.rect)
-        button.Back(screen, 900, 25, 100, 70)
+        button.Back(screen, 900, 25, 100, 70, "Back")
         pygame.display.update()
     quit()
 

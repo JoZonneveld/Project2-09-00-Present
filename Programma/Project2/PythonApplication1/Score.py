@@ -44,6 +44,6 @@ def Score(screen, button, BackGround_Score):
             textRect.center = (550, (250 + (count * 50)))
             screen.blit(textSurf, textRect)
 
-        button.Back(screen, 900, 25, 100, 70)
+        button.Back(screen, 900, 25, 100, 70, "Back")
         pygame.display.update()
     quit()

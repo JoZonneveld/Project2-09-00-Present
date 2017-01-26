@@ -139,7 +139,7 @@ class Button:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             Score(screen, button, BackGround_Score)
 
-    def Back(self, screen, x, y, b, h):
+    def Back(self, screen, x, y, b, h, tekst):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -151,7 +151,7 @@ class Button:
             main_screen(screen, BackGround, button, circle)
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("Back", smallText)
+        textSurf, textRect = self.text_objects(tekst, smallText)
         textRect.center = ((920 + (50 / 2)), (35 + (50 / 2)))
         screen.blit(textSurf, textRect)
 

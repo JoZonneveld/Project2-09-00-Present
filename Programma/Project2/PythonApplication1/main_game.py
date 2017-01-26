@@ -12,7 +12,7 @@ def main_game(screen, button, BackGround_Game):
     while process_events():
         pygame.display.set_caption('Battleport')
         screen.blit(BackGround_Game.image, BackGround_Game.rect)
-        button.Back(screen, 900, 25, 100, 70)
+        button.Back(screen, 900, 25, 100, 70, "Back")
         pygame.init()
         clock = pygame.time.Clock()
         Done = False
@@ -185,7 +185,7 @@ def main_game(screen, button, BackGround_Game):
                                                      TileHeight])
 
             clock.tick(30)
-            button.Back(screen, 900, 25, 100, 70)
+            button.Back(screen, 900, 25, 100, 70, "Quit")
             pygame.display.flip()
 
             Map.update()
