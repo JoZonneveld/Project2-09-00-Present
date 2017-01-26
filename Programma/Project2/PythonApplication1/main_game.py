@@ -49,7 +49,12 @@ def main_game(screen, button, BackGround_Game):
                 self.VRange = VRange
 
             def MoveUp(self):
-                pass
+                for i in self.PositionList:
+                    i.y -= 1
+
+            def MoveDown(self):
+                for i in self.PositionList:
+                    i.y += 1
 
             def Move(self, Direction):
                 if Direction == "UP":
@@ -107,39 +112,57 @@ def main_game(screen, button, BackGround_Game):
                     TempTile = MapTile("WaterTile", Column, Row)
                     Grid[Column][Row].append(TempTile)
 
-            global objectslistp1
-            objectslistp1 = \
-            [
-                #PLAYER 1
+            #Player 1 globals
 
-                #Biggest boats
-                Character("Merapi", GREEN, 4, 1, [Vector(3, 20), Vector(3, 19), Vector(3, 18), Vector(3, 17)], 4, 4),
-                Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)], 4, 4),
+            global MerapiP1
+            global AmadeaP1
 
-                #Bigger boats
-                Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3),
-                Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3),
-                Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3),
+            global Silver_whisperP1
+            global Windsurf_Sea_SpiritP1
+            global IntensityP1
 
-                #Big boats
-                Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2),
-                Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2),
+            global Furgo_SaltireP1
+            global Santa_BettinaP1
 
-                # PLAYER 2
+            # PLAYER 1
 
-                # Biggest boats
-                Character("Merapi", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)], 4, 4),
-                Character("Amadea ", RED, 4, 1, [Vector(5, 0), Vector(5, 1), Vector(5, 2), Vector(5, 3)], 4, 4),
+            # Biggest boats
+            MerapiP1 = Character("Merapi", GREEN, 4, 1, [Vector(3, 20), Vector(3, 19), Vector(3, 18), Vector(3, 17)], 4, 4)
+            AmadeaP1 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)], 4, 4)
 
-                # Bigger boats
-                Character("Silver whisper", RED, 3, 2, [Vector(7, 0), Vector(7, 1), Vector(7, 2)], 3, 3),
-                Character("Windsurf Sea Spirit", RED, 3, 2, [Vector(9, 0), Vector(9, 1), Vector(9, 2)], 3, 3),
-                Character("Intensity", RED, 3, 2, [Vector(11, 0), Vector(11, 1), Vector(11, 2)], 3, 3),
+            # Bigger boats
+            Silver_whisperP1 = Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
+            Windsurf_Sea_SpiritP1 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
+            IntensityP1 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
 
-                # Big boats
-                Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2),
-                Character("Santa Bettina", RED, 2, 3, [Vector(15, 0), Vector(15, 1)], 2, 2),
-            ]
+            # Big boats
+            Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
+            Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+
+
+            #Player 2 Globals
+            global MerapiP2
+            global AmadeaP2
+
+            global Silver_whisperP2
+            global Windsurf_Sea_SpiritP2
+            global IntensityP2
+
+            global Furgo_SaltireP2
+            global Santa_BettinaP2
+
+            MerapiP2 = Character("Merapi", GREEN, 4, 1, [Vector(3, 10), Vector(3, 9), Vector(3, 8), Vector(3, 7)], 4, 4)
+            AmadeaP2 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)],
+                                 4, 4)
+
+            # Bigger boats
+            Silver_whisperP2 = Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
+            Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
+            IntensityP2 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
+
+            # Big boats
+            Furgo_SaltireP2 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
+            Santa_BettinaP2 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
 
             def update(self):
                 for Column in range(MapSize):
@@ -154,7 +177,14 @@ def main_game(screen, button, BackGround_Game):
         Map = Map()
 
         while not Done:
+            keys = pygame.key.get_pressed()
 
+            if keys[pygame.K_UP]:
+                MerapiP1.MoveUp()
+                print("up")
+            elif keys[pygame.K_DOWN]:
+                MerapiP1.MoveDown()
+                print("down")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     Done = True
@@ -172,16 +202,14 @@ def main_game(screen, button, BackGround_Game):
                                                      TileWidth,
                                                      TileHeight])
 
-            for objectje in objectslistp1:
-                for positionnumber in range(0, len(objectje.PositionList)):  # determines length of boat
-
-                    x = objectje.PositionList[positionnumber].x
-                    y = objectje.PositionList[positionnumber].y
-                    color = objectje.Color
-                    pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
-                                                     (TileMargin + TileHeight) * y + TileMargin,
-                                                     TileWidth,
-                                                     TileHeight])
+            for positionnumber in range(0, len(MerapiP1.PositionList)):  # determines length of boat
+                x = MerapiP1.PositionList[positionnumber].x
+                y = MerapiP1.PositionList[positionnumber].y
+                color = MerapiP1.Color
+                pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                 (TileMargin + TileHeight) * y + TileMargin,
+                                                 TileWidth,
+                                                 TileHeight])
 
             clock.tick(30)
             button.Back(screen, 900, 25, 100, 70, "Quit")
