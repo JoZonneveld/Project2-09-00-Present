@@ -11,8 +11,6 @@ def process_events():
 def main_game(screen, button, BackGround_Game):
     while process_events():
         pygame.display.set_caption('Battleport')
-        screen.blit(BackGround_Game.image, BackGround_Game.rect)
-        button.Back(screen, 900, 25, 100, 70, "Back")
         pygame.init()
         clock = pygame.time.Clock()
         Done = False
@@ -108,6 +106,7 @@ def main_game(screen, button, BackGround_Game):
                 for Column in range(MapSize):
                     TempTile = MapTile("WaterTile", Column, Row)
                     Grid[Column][Row].append(TempTile)
+
             global objectslistp1
             objectslistp1 = \
             [
