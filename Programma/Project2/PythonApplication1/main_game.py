@@ -1,10 +1,10 @@
 import pygame
 from Color import *
 from database import *
-
 global Turn
 Turn = "P1"
-
+global endturn
+endturn = True
 class GameButtons:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
@@ -19,18 +19,24 @@ class GameButtons:
         else:
             pygame.draw.rect(screen, red, (x, y, b, h))
 
-        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and endturn == True:
             # endturn(screen)
             if Turn == "P1":
                 Furgo_SaltireP1.EndTurn()
-                print("ENd turn p1")
                 global Turn
                 Turn = "P2"
             elif Turn == "P2":
                 Furgo_SaltireP2.EndTurn()
-                print("ENd turn p2")
                 global Turn
                 Turn = "P1"
+            global endturn
+            endturn = False
+            print("Click")
+
+        if click[0] != 1 and endturn == False:
+            print("Release")
+            global endturn
+            endturn = True
 
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -45,11 +51,6 @@ def process_events():
         if event.type == pygame.QUIT:
             return False
     return True
-
-def endturn(screen):
-    screen.fill(white)
-
-
 
 def main_game(screen, button, BackGround_Game):
     while process_events():
