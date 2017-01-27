@@ -1,83 +1,50 @@
-import pygame
+import pygame, sys
+from pgu import gui
 
+screen = None
+WIDTH = 640
+HEIGHT = 480
 
-BLACK    = (   0,   0,   0)
-WHITE    = ( 255, 255, 255)
-GREEN    = (   0, 255,   0)
-RED      = ( 255,   0,   0)
+def init_pygame():
+    global screen
+    pygame.display.init()
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.DOUBLEBUF)
+    pygame.display.set_caption('Testing PGU')
 
+class SimpleDialog(gui.Dialog):
+    def __init__(self):
+        title = gui.Label("Spam")
+        main = gui.Container(width=20, height=20)
+        # I patched PGU to use new style classes.
+        super(SimpleDialog, self).__init__(title, main, width=40, height=40)
 
-width  = 20
-height = 20
+    def close(self, *args, **kwargs):
+        print ("closing")
+        return super(SimpleDialog, self).close(*args, **kwargs)
 
+def run():
+    init_pygame()
+    app = gui.App()
 
-margin = 5
+    dialog = SimpleDialog()
+    app.init(dialog)
 
-grid = []
-for row in range(10):
-
-    grid.append([])
-    for column in range(10):
-        grid[row].append(0)
-
-pygame.init()
-
-
-size = [255, 255]
-screen = pygame.display.set_mode(size)
-
-
-
-done = False
-
-
-clock = pygame.time.Clock()
-
-#Main Program Loop
-while done == False:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            done = True
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-
-            pos = pygame.mouse.get_pos()
-
-            column = pos[0] // (width + margin)
-            row = pos[1] // (height + margin)
-
-            grid[row][column] = 1
-            grid[row+1][column+1] = 1
-            grid[row-1][column-1] = 1
-            grid[row-1][column] = 1
-            grid[row+1][column] = 1
-            grid[row][column+1] = 1
-            grid[row][column-1] = 1
-            grid[row-1][column+1] = 1
-            grid[row+1][column-1] = 1
-
-            print("Click ", pos, "Grid coordinates: ", row, column)
-
-    # Set the screen background
-    screen.fill(BLACK)
-
-
-    for row in range(10):
-       for column in range(10):
-            color = WHITE
-            if grid[row][column] == 1:
-                color = RED
-            pygame.draw.rect(screen,
-                             color,
-                             [(margin+width)*column+margin,
-                              (margin+height)*row+margin,
-                              width,
-                              height])
-
-
-    clock.tick(90)
-
-
-
+    app.paint(screen)
     pygame.display.flip()
+    while True:
+        app.paint(screen)
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 3: # right mouse button
+                    print ("opening")
+                    dialog.open()
+                else:
+                    app.event(event)
+            elif event.type == pygame.QUIT:
+                sys.exit()
+            else:
+                app.event(event)
 
-pygame.quit()
+if __name__=='__main__':
+    run()

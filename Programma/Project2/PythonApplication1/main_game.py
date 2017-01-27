@@ -1,12 +1,55 @@
 import pygame
 from Color import *
 from database import *
+
+global Turn
+Turn = "P1"
+
+class GameButtons:
+    def text_objects(self, text, font):
+        textSurface = font.render(text, True, (0, 0, 0))
+        return textSurface, textSurface.get_rect()
+
+    def EndTurn(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, red, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            # endturn(screen)
+            if Turn == "P1":
+                Furgo_SaltireP1.EndTurn()
+                print("ENd turn p1")
+                global Turn
+                Turn = "P2"
+            elif Turn == "P2":
+                Furgo_SaltireP2.EndTurn()
+                print("ENd turn p2")
+                global Turn
+                Turn = "P1"
+
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("End turn", smallText)
+        textRect.center = ((920 + (50 / 2)), (310 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+gamebutton = GameButtons()
 def process_events():
     pygame.init()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
     return True
+
+def endturn(screen):
+    screen.fill(white)
+
+
 
 def main_game(screen, button, BackGround_Game):
     while process_events():
@@ -48,6 +91,8 @@ def main_game(screen, button, BackGround_Game):
                 self.HRange = HRange
                 self.VRange = VRange
 
+                self.MoveReset = self.Move
+
             def MoveUp(self):
                 self.able = True
                 for i in self.PositionList:
@@ -69,7 +114,7 @@ def main_game(screen, button, BackGround_Game):
                     self.Move -= 1
 
             def EndTurn(self):
-                pass
+                self.Move = self.MoveReset
 
             def Move(self, Direction):
                 if Direction == "UP":
@@ -153,7 +198,9 @@ def main_game(screen, button, BackGround_Game):
             # Big boats
             Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
             Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
-
+            global listp1
+            listp1 = [MerapiP1, AmadeaP1, Silver_whisperP1, Windsurf_Sea_SpiritP1, IntensityP1, Furgo_SaltireP1,
+                      Santa_BettinaP1]
 
             #Player 2 Globals
             global MerapiP2
@@ -166,18 +213,22 @@ def main_game(screen, button, BackGround_Game):
             global Furgo_SaltireP2
             global Santa_BettinaP2
 
-            MerapiP2 = Character("Merapi", GREEN, 4, 1, [Vector(3, 10), Vector(3, 9), Vector(3, 8), Vector(3, 7)], 4, 4)
-            AmadeaP2 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)],
+            MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 10), Vector(3, 9), Vector(3, 8), Vector(3, 7)], 4, 4)
+            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)],
                                  4, 4)
 
             # Bigger boats
-            Silver_whisperP2 = Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
-            Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
-            IntensityP2 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
+            Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
+            Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", RED, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
+            IntensityP2 = Character("Intensity", RED, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
 
             # Big boats
-            Furgo_SaltireP2 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
-            Santa_BettinaP2 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+            Furgo_SaltireP2 = Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2)
+            Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+
+            global listp2
+            listp2 = [MerapiP2, AmadeaP2, Silver_whisperP2, Windsurf_Sea_SpiritP2, IntensityP2, Furgo_SaltireP2,
+                      Santa_BettinaP2]
 
             def update(self):
                 for Column in range(MapSize):
@@ -193,13 +244,18 @@ def main_game(screen, button, BackGround_Game):
 
         while not Done:
             keys = pygame.key.get_pressed()
+            if Turn == "P1":
+                if keys[pygame.K_UP]:
+                    Furgo_SaltireP1.MoveUp()
+                elif keys[pygame.K_DOWN]:
+                    Furgo_SaltireP1.MoveDown()
+            elif Turn == "P2":
+                if keys[pygame.K_UP]:
+                    Furgo_SaltireP2.MoveUp()
+                elif keys[pygame.K_DOWN]:
+                    Furgo_SaltireP2.MoveDown()
 
-            if keys[pygame.K_UP]:
-                Furgo_SaltireP1.MoveUp()
-                print("up")
-            elif keys[pygame.K_DOWN]:
-                Furgo_SaltireP1.MoveDown()
-                print("down")
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     Done = True
@@ -226,8 +282,18 @@ def main_game(screen, button, BackGround_Game):
                                                  TileWidth,
                                                  TileHeight])
 
+            for positionnumber in range(0, len(Furgo_SaltireP2.PositionList)):  # determines length of boat
+                x = Furgo_SaltireP2.PositionList[positionnumber].x
+                y = Furgo_SaltireP2.PositionList[positionnumber].y
+                color = Furgo_SaltireP2.Color
+                pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                 (TileMargin + TileHeight) * y + TileMargin,
+                                                 TileWidth,
+                                                 TileHeight])
+
             clock.tick(30)
             button.Back(screen, 900, 25, 100, 70, "Quit")
+            gamebutton.EndTurn(screen, 900, 300, 100, 70)
             pygame.display.flip()
 
             Map.update()
