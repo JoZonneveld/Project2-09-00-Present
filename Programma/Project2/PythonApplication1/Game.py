@@ -1,8 +1,8 @@
 import pygame
+from main_game import *
 from Color import *
 from main_screen import *
 from Rules import *
-from main_game import *
 from Settings import *
 from Score import *
 from Quit import *
