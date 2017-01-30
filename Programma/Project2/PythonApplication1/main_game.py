@@ -5,6 +5,10 @@ global Turn
 Turn = "P1"
 global endturn
 endturn = True
+global turncount1
+turncount1 = 0
+global turncount2
+turncount2 = 0
 class GameButtons:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
@@ -31,14 +35,16 @@ class GameButtons:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and endturn == True:
             # endturn(screen)
             if Turn == "P1":
+                global turncount1
+                turncount1 += 1
                 Furgo_SaltireP1.EndTurn()
-                global Turn
                 Turn = "P2"
             elif Turn == "P2":
+                global turncount2
+                turncount2 += 1
                 Furgo_SaltireP2.EndTurn()
                 global Turn
                 Turn = "P1"
-            global endturn
             endturn = False
             print("Click")
 
@@ -305,9 +311,9 @@ def main_game(screen, button, BackGround_Game):
 
             clock.tick(30)
             if Turn == "P1":
-                tekst = "Player 1's turn"
+                tekst = "Player 1's turn" + str(turncount1)
             elif Turn == "P2":
-                tekst = "Player 2's turn"
+                tekst = "Player 2's turn" + str(turncount2)
 
 
             button.Back(screen, 900, 25, 100, 70, "Quit")
