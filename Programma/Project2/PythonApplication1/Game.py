@@ -11,13 +11,11 @@ pygame.init()
 
 #game buttons
 class Button:
-
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
-    def On(self, screen, x, y, b, h):
-
+    def EndTurn(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -28,6 +26,24 @@ class Button:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             pygame.mixer.music.unpause()
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("End turn", smallText)
+        textRect.center = ((575 + (50 / 2)), (290 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def On(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, green, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            pygame.mixer.music.unpause()
+
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("ON", smallText)
@@ -137,9 +153,9 @@ class Button:
         screen.blit(textSurf, textRect)
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            Score(screen, button)
+            Score(screen, button, BackGround_Score)
 
-    def Back(self, screen, x, y, b, h):
+    def Back(self, screen, x, y, b, h, tekst):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -151,7 +167,7 @@ class Button:
             main_screen(screen, BackGround, button, circle)
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("Back", smallText)
+        textSurf, textRect = self.text_objects(tekst, smallText)
         textRect.center = ((920 + (50 / 2)), (35 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
@@ -189,6 +205,7 @@ BackGround = Background('gif/water.jpg', [0, 0])
 BackGround_Rules = Background('gif/ruls.jpg', [105, 0])
 BackGround_Game = Background('gif/Template.jpg', [0,0])
 BackGround_Settings = Background('gif/setting.jpg', [0, 0])
+BackGround_Score = Background('gif/score.jpg', [0, 0])
 
 
 #screens
@@ -196,5 +213,5 @@ main_screen(screen, BackGround, button, circle)
 main_game(screen, button, BackGround_Game)
 Settings(screen, button, BackGround_Settings)
 Rules(screen, BackGround_Rules)
-Score(screen, button)
+Score(screen, button, BackGround_Score)
 Quit()

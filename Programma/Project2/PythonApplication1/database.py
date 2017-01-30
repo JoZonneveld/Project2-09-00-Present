@@ -1,7 +1,3 @@
-"""Postgres database interaction
-Copyright 2017, Sjors van Gelderen
-"""
-
 import psycopg2
 
 
@@ -42,10 +38,20 @@ def upload_score(playername, beurten):
 
 # Downloads score data from database
 def download_scores():
-    return interact_with_database("SELECT * FROM Highscore")
+    return interact_with_database("SELECT * FROM Highscore ORDER BY beurten LIMIT 5")
+
+def NormalCards():
+    return interact_with_database("SELECT * FROM Deck WHERE cardtype = 1")
+
+
 
 
 # Downloads the top score from database
 def download_top_score():
     result = interact_with_database("SELECT * FROM Highscore ORDER BY beurten")[0][1]
     return result
+
+# Downloads all the cards from the database
+# def download_cards():
+#    result = interact_with_database("SELECT * FROM Cards")
+#    return result
