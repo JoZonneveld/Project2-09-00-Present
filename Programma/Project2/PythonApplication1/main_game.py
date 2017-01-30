@@ -5,6 +5,7 @@ from database import *
 Turn = "P1"
 endturn = True
 win = False
+game = True
 global turncount1
 turncount1 = 0
 global turncount2
@@ -329,13 +330,18 @@ def main_game(screen, button, BackGround_Game):
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
-            if win == True:
+            if win == False:
+                if game == True:
+                    if Turn == "P1":
+                        upload_score("P1", turncount1)
+                    global game
+                    game = False
 
                 screen.fill(GREEN)
                 gamebutton.winscreentext(screen,"victory" )
                 button.Back(screen, 900, 25, 100, 70, "Back")
-                if Turn == "P1":
-                    upload_score("P1", )
+
+
 
 
 
