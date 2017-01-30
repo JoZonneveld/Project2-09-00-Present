@@ -10,6 +10,15 @@ class GameButtons:
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
+    def PlayerTurn(self, screen, x, y, b, h, tekst):
+        pygame.draw.rect(screen, white, (x, y, b, h))
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects(tekst, smallText)
+        textRect.center = ((840 + (50 / 2)), (160 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+
     def EndTurn(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -293,8 +302,15 @@ def main_game(screen, button, BackGround_Game):
                                                  TileHeight])
 
             clock.tick(30)
+            if Turn == "P1":
+                tekst = "Player 1's turn"
+            elif Turn == "P2":
+                tekst = "Player 2's turn"
+
+
             button.Back(screen, 900, 25, 100, 70, "Quit")
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
+            gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
             pygame.display.flip()
 
             Map.update()
