@@ -8,18 +8,44 @@ class Cards:
         self.Type = type
         self.Name = name
         self.Amount = amount
-        self.cardAmount = 100
 
     def pick_card(self):
-        random = randint(0, self.cardAmount)
-        card = self.cards[random]
-        return card
+        random = randint(0, 2)
+        if(random == 0):
+            random = randint(0,4)
+            if(random == 0):
+                return FMJ_upgrade
+            if(random == 1):
+                return Rifling
+            if(random == 2):
+                return Advanced_Rifling
+            if(random == 3):
+                return Naval_Mine
+            if(random == 4):
+                return EMP_upgrade
+        if(random == 1):
+            random = randint(0,3)
+            if(random == 0):
+                return Reinforced_Hull
+            if(random == 1):
+                return Sonar
+            if(random == 2):
+                return Smokescreen
+            if(random == 3):
+                return Sabotage
+        if(random == 2)
+            random = randint(0,4)
+            if(random == 0)
+                return Backup
+            if(random == 1)
+                return Extra_Fuel
+            if(random == 2)
+                return Extra_Fuel_II
+            if(random == 3)
+                return Rally
+            if(random == 4)
+                return Adrenaline_rush
 
-    def drew_card(self):
-        self.Amount -= 1
-
-    def update_card(self):
-        self.cardAmount =- 1
 
 
 

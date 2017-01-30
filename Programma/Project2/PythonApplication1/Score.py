@@ -1,5 +1,3 @@
-from msilib import Table
-
 import pygame
 from Color import *
 from database import *

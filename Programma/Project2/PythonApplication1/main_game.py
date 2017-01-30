@@ -1,11 +1,14 @@
 import pygame
 from Color import *
 from database import *
-global Turn
+
 Turn = "P1"
-global endturn
 endturn = True
 win = False
+global turncount1
+turncount1 = 0
+global turncount2
+turncount2 = 0
 class GameButtons:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
@@ -31,6 +34,9 @@ class GameButtons:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        global Turn
+        global endturn
+
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
         else:
@@ -39,20 +45,21 @@ class GameButtons:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and endturn == True:
             # endturn(screen)
             if Turn == "P1":
+                global turncount1
+                turncount1 += 1
                 Furgo_SaltireP1.EndTurn()
-                global Turn
                 Turn = "P2"
             elif Turn == "P2":
+                global turncount2
+                turncount2 += 1
                 Furgo_SaltireP2.EndTurn()
-                global Turn
                 Turn = "P1"
-            global endturn
             endturn = False
             print("Click")
 
         if click[0] != 1 and endturn == False:
             print("Release")
-            global endturn
+
             endturn = True
 
 
@@ -231,18 +238,18 @@ def main_game(screen, button, BackGround_Game):
             global Furgo_SaltireP2
             global Santa_BettinaP2
 
-            MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 10), Vector(3, 9), Vector(3, 8), Vector(3, 7)], 4, 4)
-            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)],
+            MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)], 4, 4)
+            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 0), Vector(5, 1), Vector(5, 2), Vector(5, 3)],
                                  4, 4)
 
             # Bigger boats
-            Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
-            Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", RED, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
-            IntensityP2 = Character("Intensity", RED, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
+            Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 0), Vector(7, 1), Vector(7, 2)], 3, 3)
+            Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", RED, 3, 2, [Vector(9, 0), Vector(9, 1), Vector(9, 2)], 3, 3)
+            IntensityP2 = Character("Intensity", RED, 3, 2, [Vector(11, 0), Vector(11, 1), Vector(11, 2)], 3, 3)
 
             # Big boats
             Furgo_SaltireP2 = Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2)
-            Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+            Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 0), Vector(15, 1)], 2, 2)
 
             global listp2
             listp2 = [MerapiP2, AmadeaP2, Silver_whisperP2, Windsurf_Sea_SpiritP2, IntensityP2, Furgo_SaltireP2,
@@ -291,29 +298,31 @@ def main_game(screen, button, BackGround_Game):
                                                      TileWidth,
                                                      TileHeight])
 
-            for positionnumber in range(0, len(Furgo_SaltireP1.PositionList)):  # determines length of boat
-                x = Furgo_SaltireP1.PositionList[positionnumber].x
-                y = Furgo_SaltireP1.PositionList[positionnumber].y
-                color = Furgo_SaltireP1.Color
-                pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
-                                                 (TileMargin + TileHeight) * y + TileMargin,
-                                                 TileWidth,
-                                                 TileHeight])
+            for list in listp1:
+                for positionnumber in range(0, len(list.PositionList)):
+                    x = list.PositionList[positionnumber].x
+                    y = list.PositionList[positionnumber].y
+                    color = list.Color
+                    pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                     (TileMargin + TileHeight) * y + TileMargin,
+                                                     TileWidth,
+                                                     TileHeight])
 
-            for positionnumber in range(0, len(Furgo_SaltireP2.PositionList)):  # determines length of boat
-                x = Furgo_SaltireP2.PositionList[positionnumber].x
-                y = Furgo_SaltireP2.PositionList[positionnumber].y
-                color = Furgo_SaltireP2.Color
-                pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
-                                                 (TileMargin + TileHeight) * y + TileMargin,
-                                                 TileWidth,
-                                                 TileHeight])
+            for list in listp2:
+                for positionnumber in range(0, len(list.PositionList)):
+                    x = list.PositionList[positionnumber].x
+                    y = list.PositionList[positionnumber].y
+                    color = list.Color
+                    pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                     (TileMargin + TileHeight) * y + TileMargin,
+                                                     TileWidth,
+                                                     TileHeight])
 
             clock.tick(30)
             if Turn == "P1":
-                tekst = "Player 1's turn"
+                tekst = "Player 1's turn" + str(turncount1)
             elif Turn == "P2":
-                tekst = "Player 2's turn"
+                tekst = "Player 2's turn" + str(turncount2)
 
 
             button.Back(screen, 900, 25, 100, 70, "Quit")

@@ -1,8 +1,8 @@
 import pygame
+from main_game import *
 from Color import *
 from main_screen import *
 from Rules import *
-from main_game import *
 from Settings import *
 from Score import *
 from Quit import *
@@ -14,23 +14,6 @@ class Button:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
-
-    def EndTurn(self, screen, x, y, b, h):
-        mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
-
-        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
-            pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
-        else:
-            pygame.draw.rect(screen, green, (x, y, b, h))
-
-        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
-            pygame.mixer.music.unpause()
-
-        smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("End turn", smallText)
-        textRect.center = ((575 + (50 / 2)), (290 + (50 / 2)))
-        screen.blit(textSurf, textRect)
 
     def On(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
