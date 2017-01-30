@@ -1,9 +1,8 @@
 import pygame
 from Color import *
 from database import *
-global Turn
+
 Turn = "P1"
-global endturn
 endturn = True
 global turncount1
 turncount1 = 0
@@ -27,6 +26,9 @@ class GameButtons:
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        global Turn
+        global endturn
+
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
         else:
@@ -43,14 +45,13 @@ class GameButtons:
                 global turncount2
                 turncount2 += 1
                 Furgo_SaltireP2.EndTurn()
-                global Turn
                 Turn = "P1"
             endturn = False
             print("Click")
 
         if click[0] != 1 and endturn == False:
             print("Release")
-            global endturn
+
             endturn = True
 
 
