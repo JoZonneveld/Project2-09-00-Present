@@ -81,6 +81,8 @@ class GameButtons:
 
         image = pygame.image.load("gif/card.jpg").convert()
 
+        global Furgo_SaltireP1
+
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
         else:
@@ -92,14 +94,14 @@ class GameButtons:
                 print("Click")
             else:
                 self.showCard = True
-        if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1:
-            self.showCard = True
-
 
         if  click[0] != 1 and self.showCard == False:
             screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
             print("Released")
 
+        if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1:
+            self.showCard = True
+            Furgo_SaltireP1.AddHP()
 
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -220,6 +222,8 @@ def main_game(screen, button, BackGround_Game):
 
             def Location(self):
                 print("Coordinates: " + str(self.Column) + ", " + str(self.Row))
+            def AddHP(self):
+                self.HP += 1
 
         class Map(object):
             global MapSize
@@ -369,11 +373,11 @@ def main_game(screen, button, BackGround_Game):
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
-            if win == False:
+            if win == True:
+                global game
                 if game == True:
                     if Turn == "P1":
                         upload_score("P1", turncount1)
-                    global game
                     game = False
 
                 screen.fill(GREEN)
