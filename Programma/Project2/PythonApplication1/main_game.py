@@ -4,6 +4,8 @@ from database import *
 
 Turn = "P1"
 endturn = True
+win = False
+game = True
 turncount1 = 0
 turncount2 = 0
 class GameButtons:
@@ -13,6 +15,13 @@ class GameButtons:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
+
+    def winscreentext(self, screen, test):
+
+        smallText = pygame.font.Font("freesansbold.ttf", 80)
+        textSurf, textRect = self.text_objects(test, smallText)
+        textRect.center = ((512 + (50 / 2)), (300 + (50 / 2)))
+        screen.blit(textSurf, textRect)
 
     def PlayerTurn(self, screen, x, y, b, h, tekst):
         pygame.draw.rect(screen, white, (x, y, b, h))
@@ -359,6 +368,23 @@ def main_game(screen, button, BackGround_Game):
             gamebutton.DrawCard(screen, 900, 500, 100, 70)
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
+
+            if win == False:
+                if game == True:
+                    if Turn == "P1":
+                        upload_score("P1", turncount1)
+                    global game
+                    game = False
+
+                screen.fill(GREEN)
+                gamebutton.winscreentext(screen,"victory" )
+                button.Back(screen, 900, 25, 100, 70, "Back")
+
+
+
+
+
+
             pygame.display.flip()
 
             Map.update()
