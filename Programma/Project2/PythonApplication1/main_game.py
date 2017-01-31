@@ -16,6 +16,70 @@ class GameButtons:
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
+    def Up(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.MoveUp()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.MoveUp()
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Up", smallText)
+        textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def Down(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.MoveDown()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.MoveDown()
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Down", smallText)
+        textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
     def listBoats(self, screen, x, y, b, h, tekst, boat):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -52,9 +116,9 @@ class GameButtons:
         global clicked
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
-            pygame.draw.rect(screen, hover_grey, (x, y, b, h))  # hor, vert, length, height
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
         else:
-            pygame.draw.rect(screen, grey, (x, y, b, h))
+            pygame.draw.rect(screen, white, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             if Turn == "P1":
@@ -74,7 +138,7 @@ class GameButtons:
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects("Defence", smallText)
-        textRect.center = ((920 + (50 / 2)), (510 + (50 / 2)))
+        textRect.center = (((x+20) + (50 / 2)), ((y+10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
 
@@ -86,9 +150,9 @@ class GameButtons:
         global ChooseBoat
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
-            pygame.draw.rect(screen, hover_grey, (x, y, b, h))  # hor, vert, length, height
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
         else:
-            pygame.draw.rect(screen, grey, (x, y, b, h))
+            pygame.draw.rect(screen, white, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             if Turn == "P1":
@@ -405,24 +469,6 @@ def main_game(screen, button, BackGround_Game):
         Map = Map()
 
         while not Done:
-            keys = pygame.key.get_pressed()
-            if Turn == "P1":
-                if keys[pygame.K_UP]:
-                    for i in listp1:
-                        if i.Selected == True:
-                            if keys[pygame.K_UP]:
-                                i.MoveUp()
-                            elif keys[pygame.K_DOWN]:
-                                i.MoveDown()
-            elif Turn == "P2":
-                for i in listp2:
-                    if i.Selected == True:
-                        if keys[pygame.K_UP]:
-                            i.MoveUp()
-                        elif keys[pygame.K_DOWN]:
-                            i.MoveDown()
-
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     Done = True
@@ -502,8 +548,10 @@ def main_game(screen, button, BackGround_Game):
                         name = i.Name + " - HP: " + str(i.HP)
                         gamebutton.listBoats(screen, x, y, b, h, name, i)
             else:
-                gamebutton.TurnDefence(screen, 900, 500, 100, 70)
-                gamebutton.ToSelect(screen, 750, 500, 100, 70)
+                gamebutton.TurnDefence(screen, 900, 400, 100, 70)
+                gamebutton.ToSelect(screen, 750, 400, 100, 70)
+                gamebutton.Up(screen, 750, 550, 100, 70)
+                gamebutton.Down(screen, 900, 550, 100, 70)
 
             if Turn == "P1":
                 tekst = "Player 1's turn"
