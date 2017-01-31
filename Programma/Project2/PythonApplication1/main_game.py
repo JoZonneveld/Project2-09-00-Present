@@ -248,21 +248,24 @@ class GameButtons:
         image = pygame.image.load("gif/card.jpg").convert()
 
         global Furgo_SaltireP1
+        global clicked
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
         else:
             pygame.draw.rect(screen, green, (x, y, b, h))
 
-        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             if self.showCard == True:
                 self.showCard = False
-                print("Click")
             else:
                 self.showCard = True
+            print("Click")
+            clicked = False
 
-        if  click[0] != 1 and self.showCard == False:
+        if  click[0] != 1 and self.showCard == False and clicked == False:
             screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
+            clicked = True
             print("Released")
 
         if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1:
@@ -270,9 +273,9 @@ class GameButtons:
             Furgo_SaltireP1.AddHP()
 
 
-        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        smallText = pygame.font.Font("freesansbold.ttf", 18)
         textSurf, textRect = self.text_objects("Draw card", smallText)
-        textRect.center = ((920 + (50 / 2)), (310 + (50 / 2)))
+        textRect.center = (((x+20) + (50 / 2)), ((y+10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
 gamebutton = GameButtons()
@@ -575,7 +578,7 @@ def main_game(screen, button, BackGround_Game):
                 if Turn == "P1":
                     for i in listp1:
                         count += 1
-                        x = 750
+                        x = 700
                         y = 400 + (50 * count)
                         b = 150
                         h = 50
@@ -584,7 +587,7 @@ def main_game(screen, button, BackGround_Game):
                 elif Turn == "P2":
                     for i in listp2:
                         count += 1
-                        x = 750
+                        x = 700
                         y = 400 + (50 * count)
                         b = 150
                         h = 50
@@ -603,7 +606,7 @@ def main_game(screen, button, BackGround_Game):
 
 
             button.Back(screen, 900, 25, 100, 70, "Quit")
-            gamebutton.DrawCard(screen, 900, 500, 100, 70)
+            gamebutton.DrawCard(screen, 900, 450, 100, 70)
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
