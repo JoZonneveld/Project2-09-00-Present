@@ -3,9 +3,10 @@ from Color import *
 from database import *
 
 Turn = "P1"
-endturn = True
-win = False
+clicked = True
 game = True
+ChooseBoat = False
+
 global turncount1
 turncount1 = 0
 global turncount2
@@ -14,6 +15,166 @@ class GameButtons:
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
+
+    def Up(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.MoveUp()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.MoveUp()
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Up", smallText)
+        textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def Down(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.MoveDown()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.MoveDown()
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Down", smallText)
+        textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def listBoats(self, screen, x, y, b, h, tekst, boat):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+        global ChooseBoat
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            boat.Select()
+            boat.changeColor()
+            clicked = False
+            ChooseBoat = True
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 12)
+        textSurf, textRect = self.text_objects(tekst, smallText)
+        textRect.center = (((x + 50) +(50 / 2)), (y + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+
+    def TurnDefence(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.TurnDefence()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.TurnDefence()
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Defence", smallText)
+        textRect.center = (((x+20) + (50 / 2)), ((y+10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+
+    def ToSelect(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+        global ChooseBoat
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                print("P1")
+                for i in listp1:
+                    i.UnSelect()
+            elif Turn == "P2":
+                print("P2")
+                for i in listp2:
+                    i.UnSelect()
+            ChooseBoat = False
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Back", smallText)
+        textRect.center = (((x+15) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
 
     def winscreentext(self, screen, test):
 
@@ -36,32 +197,36 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global Turn
-        global endturn
+        global ChooseBoat
+        global clicked
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
         else:
             pygame.draw.rect(screen, red, (x, y, b, h))
 
-        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and endturn == True:
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             # endturn(screen)
             if Turn == "P1":
                 global turncount1
                 turncount1 += 1
-                Furgo_SaltireP1.EndTurn()
+                for i in listp1:
+                    i.EndTurn()
                 Turn = "P2"
             elif Turn == "P2":
                 global turncount2
                 turncount2 += 1
-                Furgo_SaltireP2.EndTurn()
+                for i in listp2:
+                    i.EndTurn()
                 Turn = "P1"
-            endturn = False
+            clicked = False
+            ChooseBoat = False
             print("Click")
 
-        if click[0] != 1 and endturn == False:
+        if click[0] != 1 and clicked == False:
             print("Release")
 
-            endturn = True
+            clicked = True
 
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -117,7 +282,37 @@ def main_game(screen, button, BackGround_Game):
                 self.HRange = HRange
                 self.VRange = VRange
 
+                self.ColorReset = self.Color
                 self.MoveReset = self.Move
+                self.HRangeReset = self.HRange
+                self.VRangeReset = self.VRange
+                self.Defence = False
+                self.Selected = False
+
+            def Select(self):
+                self.Selected = True
+
+            def UnSelect(self):
+                self.Selected = False
+                self.Color = self.ColorReset
+
+            def changeColor(self):
+                self.Color = white
+
+            def TurnDefence(self):
+                if self.Defence == False:
+                    self.sum = 0
+                    self.count = 0
+
+                    for i in self.PositionList:
+                        self.sum += i.y
+                        i.x += self.count
+                        self.count += 1
+
+                    self.avg = self.sum / self.count
+                    for new in self.PositionList:
+                        new.y = int(self.avg)
+                    self.Defence = True
 
             def MoveUp(self):
                 self.able = True
@@ -126,7 +321,10 @@ def main_game(screen, button, BackGround_Game):
                         self.able = False
                 if self.able == True and self.Move != 0:
                     for i in self.PositionList:
-                        i.y -= 1
+                        if self.Defence == False:
+                            i.y -= 1
+                        else:
+                            i.x -= 1
                     self.Move -= 1
 
             def MoveDown(self):
@@ -136,11 +334,16 @@ def main_game(screen, button, BackGround_Game):
                         self.able = False
                 if self.able == True and self.Move != 0:
                     for i in self.PositionList:
-                        i.y += 1
+                        if self.Defence == False:
+                            i.y += 1
+                        else:
+                            i.x += 1
                     self.Move -= 1
 
             def EndTurn(self):
                 self.Move = self.MoveReset
+                self.Selected = False
+                self.Color = self.ColorReset
 
             def Move(self, Direction):
                 if Direction == "UP":
@@ -201,60 +404,57 @@ def main_game(screen, button, BackGround_Game):
             #Player 1 globals
 
             global MerapiP1
-            global AmadeaP1
+            # global AmadeaP1
 
             global Silver_whisperP1
-            global Windsurf_Sea_SpiritP1
-            global IntensityP1
+            # global Windsurf_Sea_SpiritP1
+            # global IntensityP1
 
             global Furgo_SaltireP1
-            global Santa_BettinaP1
+            # global Santa_BettinaP1
 
             # PLAYER 1
 
             # Biggest boats
             MerapiP1 = Character("Merapi", GREEN, 4, 1, [Vector(3, 20), Vector(3, 19), Vector(3, 18), Vector(3, 17)], 4, 4)
-            AmadeaP1 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)], 4, 4)
+            # AmadeaP1 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)], 4, 4)
 
             # Bigger boats
             Silver_whisperP1 = Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
-            Windsurf_Sea_SpiritP1 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
-            IntensityP1 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
+            # Windsurf_Sea_SpiritP1 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
+            # IntensityP1 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
 
             # Big boats
             Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
-            Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+            # Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
             global listp1
-            listp1 = [MerapiP1, AmadeaP1, Silver_whisperP1, Windsurf_Sea_SpiritP1, IntensityP1, Furgo_SaltireP1,
-                      Santa_BettinaP1]
+            listp1 = [MerapiP1, Silver_whisperP1, Furgo_SaltireP1]
 
             #Player 2 Globals
-            global MerapiP2
+            # global MerapiP2
             global AmadeaP2
 
-            global Silver_whisperP2
+            # global Silver_whisperP2
             global Windsurf_Sea_SpiritP2
-            global IntensityP2
+            # global IntensityP2
 
-            global Furgo_SaltireP2
+            # global Furgo_SaltireP2
             global Santa_BettinaP2
 
-            MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)], 4, 4)
-            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 0), Vector(5, 1), Vector(5, 2), Vector(5, 3)],
-                                 4, 4)
+            # MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)], 4, 4)
+            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 0), Vector(5, 1), Vector(5, 2), Vector(5, 3)],4, 4)
 
             # Bigger boats
-            Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 0), Vector(7, 1), Vector(7, 2)], 3, 3)
+            # Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 0), Vector(7, 1), Vector(7, 2)], 3, 3)
             Windsurf_Sea_SpiritP2 = Character("Windsurf Sea Spirit", RED, 3, 2, [Vector(9, 0), Vector(9, 1), Vector(9, 2)], 3, 3)
-            IntensityP2 = Character("Intensity", RED, 3, 2, [Vector(11, 0), Vector(11, 1), Vector(11, 2)], 3, 3)
+            # IntensityP2 = Character("Intensity", RED, 3, 2, [Vector(11, 0), Vector(11, 1), Vector(11, 2)], 3, 3)
 
             # Big boats
-            Furgo_SaltireP2 = Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2)
+            # Furgo_SaltireP2 = Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2)
             Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 0), Vector(15, 1)], 2, 2)
 
             global listp2
-            listp2 = [MerapiP2, AmadeaP2, Silver_whisperP2, Windsurf_Sea_SpiritP2, IntensityP2, Furgo_SaltireP2,
-                      Santa_BettinaP2]
+            listp2 = [AmadeaP2, Windsurf_Sea_SpiritP2, Santa_BettinaP2]
 
             def update(self):
                 for Column in range(MapSize):
@@ -269,19 +469,6 @@ def main_game(screen, button, BackGround_Game):
         Map = Map()
 
         while not Done:
-            keys = pygame.key.get_pressed()
-            if Turn == "P1":
-                if keys[pygame.K_UP]:
-                    Furgo_SaltireP1.MoveUp()
-                elif keys[pygame.K_DOWN]:
-                    Furgo_SaltireP1.MoveDown()
-            elif Turn == "P2":
-                if keys[pygame.K_UP]:
-                    Furgo_SaltireP2.MoveUp()
-                elif keys[pygame.K_DOWN]:
-                    Furgo_SaltireP2.MoveDown()
-
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     Done = True
@@ -319,32 +506,77 @@ def main_game(screen, button, BackGround_Game):
                                                      TileWidth,
                                                      TileHeight])
 
-            clock.tick(30)
-            if Turn == "P1":
-                tekst = "Player 1's turn" + str(turncount1)
-            elif Turn == "P2":
-                tekst = "Player 2's turn" + str(turncount2)
 
+
+            for hp in listp1:
+                if hp.HP > 0:
+                    winp1 = False
+                else:
+                    winp1 = True
+
+            for hp in listp2:
+                if hp.HP > 0:
+                    winp2 = False
+                else:
+                    winp2 = True
+
+            clock.tick(30)
 
             button.Back(screen, 900, 25, 100, 70, "Quit")
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
+
+            #Sjors van Gelderen had toestemming gegeven om 3 boten te plaatsen per speler
+
+            if ChooseBoat == False:
+                count = 0
+                if Turn == "P1":
+                    for i in listp1:
+                        count += 1
+                        x = 750
+                        y = 400 + (50 * count)
+                        b = 150
+                        h = 50
+                        name = i.Name + " - HP: " + str(i.HP)
+                        gamebutton.listBoats(screen, x, y, b, h, name, i)
+                elif Turn == "P2":
+                    for i in listp2:
+                        count += 1
+                        x = 750
+                        y = 400 + (50 * count)
+                        b = 150
+                        h = 50
+                        name = i.Name + " - HP: " + str(i.HP)
+                        gamebutton.listBoats(screen, x, y, b, h, name, i)
+            else:
+                gamebutton.TurnDefence(screen, 900, 400, 100, 70)
+                gamebutton.ToSelect(screen, 750, 400, 100, 70)
+                gamebutton.Up(screen, 750, 550, 100, 70)
+                gamebutton.Down(screen, 900, 550, 100, 70)
+
+            if Turn == "P1":
+                tekst = "Player 1's turn"
+            elif Turn == "P2":
+                tekst = "Player 2's turn"
+
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
-            if win == False:
+
+            if winp1 == True or winp2 == True:
+                print("There is a winner")
                 if game == True:
-                    if Turn == "P1":
+                    pass
+                    '''
+                    if winp1 == True:
                         upload_score("P1", turncount1)
+                    elif winp2 == True:
+                        upload_score("P2", turncount2)
                     global game
                     game = False
+                    '''
 
                 screen.fill(GREEN)
-                gamebutton.winscreentext(screen,"victory" )
+                gamebutton.winscreentext(screen,"victory")
                 button.Back(screen, 900, 25, 100, 70, "Back")
-
-
-
-
-
 
             pygame.display.flip()
 
