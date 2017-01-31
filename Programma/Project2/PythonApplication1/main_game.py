@@ -9,9 +9,11 @@ ChooseBoat = False
 
 global turncount1
 turncount1 = 0
-global turncount2
 turncount2 = 0
 class GameButtons:
+    def __init__(self):
+        self.showCard = True
+
     def text_objects(self, text, font):
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
@@ -234,6 +236,45 @@ class GameButtons:
         textRect.center = ((920 + (50 / 2)), (310 + (50 / 2)))
         screen.blit(textSurf, textRect)
 
+    def DrawCard(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        imagex = 500
+        imagey = 300
+        imagew = 125
+        imageh = 175
+
+        image = pygame.image.load("gif/card.jpg").convert()
+
+        global Furgo_SaltireP1
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, green, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
+            if self.showCard == True:
+                self.showCard = False
+                print("Click")
+            else:
+                self.showCard = True
+
+        if  click[0] != 1 and self.showCard == False:
+            screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
+            print("Released")
+
+        if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1:
+            self.showCard = True
+            Furgo_SaltireP1.AddHP()
+
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Draw card", smallText)
+        textRect.center = ((920 + (50 / 2)), (310 + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
 gamebutton = GameButtons()
 def process_events():
     pygame.init()
@@ -385,6 +426,8 @@ def main_game(screen, button, BackGround_Game):
 
             def Location(self):
                 print("Coordinates: " + str(self.Column) + ", " + str(self.Row))
+            def AddHP(self):
+                self.HP += 1
 
         class Map(object):
             global MapSize
@@ -558,6 +601,10 @@ def main_game(screen, button, BackGround_Game):
             elif Turn == "P2":
                 tekst = "Player 2's turn"
 
+
+            button.Back(screen, 900, 25, 100, 70, "Quit")
+            gamebutton.DrawCard(screen, 900, 500, 100, 70)
+            gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
 
