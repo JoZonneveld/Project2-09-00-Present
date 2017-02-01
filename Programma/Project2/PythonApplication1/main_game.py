@@ -18,7 +18,7 @@ class GameButtons:
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
-    def Fire(self, screen, x, y, b, h):
+    def Fire(self, screen, x, y, b, h, Rangelist):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -30,6 +30,21 @@ class GameButtons:
             pygame.draw.rect(screen, red, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for a in listp1:
+                    if a.Selected == True:
+                        if a.Fired == False:
+                            for r in Rangelist:
+                                for i in listp2:
+                                    hit = False
+                                    for Position in range(0, len(i.PositionList)):
+                                        if r[0] == i.PositionList[Position].x and r[1] == i.PositionList[Position].y:
+                                            hit = True
+                                            print("Hit")
+                                    if hit == True:
+                                        print("Hit2")
+                                        i.Hit()
+                            a.Fire()
             clicked = False
             print("Click")
 
@@ -146,6 +161,14 @@ class GameButtons:
             pygame.draw.rect(screen, white, (x, y, b, h))
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            if Turn == "P1":
+                for i in listp1:
+                    if i.Selected == True:
+                        i.TurnAttack()
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        i.TurnAttack()
             clicked = False
             print("Click")
 
@@ -379,9 +402,16 @@ def main_game(screen, button, BackGround_Game):
                 self.VRangeReset = self.VRange
                 self.Defence = False
                 self.Selected = False
+                self.Fired = False
+
+            def Fire(self):
+                self.Fired = True
 
             def Select(self):
                 self.Selected = True
+
+            def Hit(self):
+                self.HP -= 1
 
             def UnSelect(self):
                 self.Selected = False
@@ -406,6 +436,28 @@ def main_game(screen, button, BackGround_Game):
                     self.Defence = True
                     self.VRange += 1
                     self.HRange = 0
+                    self.Move -= 1
+
+            def TurnAttack(self):
+                if self.Move != 0:
+                    self.sum = 0
+                    self.count = 0
+
+                    for i in self.PositionList:
+                        self.sum += i.x
+                        self.count += 1
+                        i.y += self.count
+
+
+                    self.avg = self.sum / self.count
+                    for new in self.PositionList:
+                        new.x = int(self.avg)
+                    if Turn == "P1":
+                        for i in self.PositionList:
+                            i.y -= 2
+                    self.Defence = False
+                    self.VRange = self.VRangeReset
+                    self.HRange = self.HRangeReset
                     self.Move -= 1
 
             def MoveUp(self):
@@ -437,6 +489,7 @@ def main_game(screen, button, BackGround_Game):
             def EndTurn(self):
                 self.Move = self.MoveReset
                 self.Selected = False
+                self.Fired = False
                 self.Color = self.ColorReset
 
             def Move(self, Direction):
@@ -521,7 +574,7 @@ def main_game(screen, button, BackGround_Game):
             # IntensityP1 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
 
             # Big boats
-            Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 20), Vector(13, 19)], 2, 2)
+            Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 10), Vector(13, 9)], 2, 2)
             # Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
             global listp1
             listp1 = [MerapiP1, Silver_whisperP1, Furgo_SaltireP1]
@@ -547,7 +600,7 @@ def main_game(screen, button, BackGround_Game):
 
             # Big boats
             # Furgo_SaltireP2 = Character("Furgo Saltire", RED, 2, 3, [Vector(13, 0), Vector(13, 1)], 2, 2)
-            Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 0), Vector(15, 1)], 2, 2)
+            Santa_BettinaP2 = Character("Santa Bettina", RED, 2, 3, [Vector(15, 10), Vector(15, 11)], 2, 2)
 
             global listp2
             listp2 = [AmadeaP2, Windsurf_Sea_SpiritP2, Santa_BettinaP2]
@@ -574,8 +627,6 @@ def main_game(screen, button, BackGround_Game):
                 for Column in range(MapSize):
                     for i in range(0, len(Map.Grid[Column][Row])):
                         Color = BLUE
-                        # if Map.Grid[Column][Row][i].Name == "Boat":
-                        #    Color = GREEN
 
                     pygame.draw.rect(screen, Color, [(TileMargin + TileWidth) * Column + TileMargin,
                                                      (TileMargin + TileHeight) * Row + TileMargin,
@@ -583,26 +634,29 @@ def main_game(screen, button, BackGround_Game):
                                                      TileHeight])
 
             for list in listp1:
-                for positionnumber in range(0, len(list.PositionList)):
-                    x = list.PositionList[positionnumber].x
-                    y = list.PositionList[positionnumber].y
-                    color = list.Color
-                    pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
-                                                     (TileMargin + TileHeight) * y + TileMargin,
-                                                     TileWidth,
-                                                     TileHeight])
+                if list.HP > 0:
+                    for positionnumber in range(0, len(list.PositionList)):
+                        x = list.PositionList[positionnumber].x
+                        y = list.PositionList[positionnumber].y
+                        color = list.Color
+                        pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                         (TileMargin + TileHeight) * y + TileMargin,
+                                                         TileWidth,
+                                                         TileHeight])
 
             for list in listp2:
-                for positionnumber in range(0, len(list.PositionList)):
-                    x = list.PositionList[positionnumber].x
-                    y = list.PositionList[positionnumber].y
-                    color = list.Color
-                    pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
-                                                     (TileMargin + TileHeight) * y + TileMargin,
-                                                     TileWidth,
-                                                     TileHeight])
+                if list.HP > 0:
+                    for positionnumber in range(0, len(list.PositionList)):
+                        x = list.PositionList[positionnumber].x
+                        y = list.PositionList[positionnumber].y
+                        color = list.Color
+                        pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                         (TileMargin + TileHeight) * y + TileMargin,
+                                                         TileWidth,
+                                                         TileHeight])
+            Rangelist = []
             if Turn == "P1":
-                RangelistTop = []
+                Rangelist = []
                 for i in listp1:
                     if i.Selected == True:
                         if i.Defence == False:
@@ -618,7 +672,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.HRange + 1)):
                                     y = i.PositionList[positionnumber].y
                                     x = (i.PositionList[positionnumber].x + a)
-
+                                    Rangelist.append([x,y])
                                     if x >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -627,7 +681,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.HRange + 1)):
                                     y = i.PositionList[positionnumber].y
                                     x = (i.PositionList[positionnumber].x - a)
-
+                                    Rangelist.append([x, y])
                                     if x >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -637,7 +691,7 @@ def main_game(screen, button, BackGround_Game):
                             for a in range(1, (i.VRange+1)):
                                 y = yminBot - a
                                 x = xas
-
+                                Rangelist.append([x, y])
                                 if y >= 0:
                                     pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                  (TileMargin + TileHeight) * y + TileMargin,
@@ -646,6 +700,7 @@ def main_game(screen, button, BackGround_Game):
                             for a in range(1, (i.VRange + 1)):
                                 y = ymaxTop + a
                                 x = xas
+                                Rangelist.append([x, y])
                                 if y < 21:
                                     pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                 (TileMargin + TileHeight) * y + TileMargin,
@@ -657,7 +712,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.VRange + 1)):
                                     y = (i.PositionList[positionnumber].y + a)
                                     x = i.PositionList[positionnumber].x
-
+                                    Rangelist.append([x, y])
                                     if y < 21:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -666,7 +721,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.VRange + 1)):
                                     y = (i.PositionList[positionnumber].y - a)
                                     x = i.PositionList[positionnumber].x
-
+                                    Rangelist.append([x, y])
                                     if y >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -688,7 +743,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.HRange + 1)):
                                     y = i.PositionList[positionnumber].y
                                     x = (i.PositionList[positionnumber].x + a)
-
+                                    Rangelist.append([x, y])
                                     if x >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -697,7 +752,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.HRange + 1)):
                                     y = i.PositionList[positionnumber].y
                                     x = (i.PositionList[positionnumber].x - a)
-
+                                    Rangelist.append([x, y])
                                     if x >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -707,7 +762,7 @@ def main_game(screen, button, BackGround_Game):
                             for a in range(1, (i.VRange+1)):
                                 y = yminBot - a
                                 x = xas
-
+                                Rangelist.append([x, y])
                                 if y >= 0:
                                     pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                  (TileMargin + TileHeight) * y + TileMargin,
@@ -716,6 +771,7 @@ def main_game(screen, button, BackGround_Game):
                             for a in range(1, (i.VRange + 1)):
                                 y = ymaxTop + a
                                 x = xas
+                                Rangelist.append([x, y])
                                 if y < 21:
                                     pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                 (TileMargin + TileHeight) * y + TileMargin,
@@ -726,7 +782,7 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.VRange + 1)):
                                     y = (i.PositionList[positionnumber].y + a)
                                     x = i.PositionList[positionnumber].x
-
+                                    Rangelist.append([x, y])
                                     if y >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
@@ -735,25 +791,22 @@ def main_game(screen, button, BackGround_Game):
                                 for a in range(1, (i.VRange + 1)):
                                     y = (i.PositionList[positionnumber].y - a)
                                     x = i.PositionList[positionnumber].x
-
+                                    Rangelist.append([x, y])
                                     if y >= 0:
                                         pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
                                                                         (TileMargin + TileHeight) * y + TileMargin,
                                                                         TileWidth,
                                                                         TileHeight])
 
-
+            winp1 = True
+            winp2 = True
             for hp in listp1:
                 if hp.HP > 0:
                     winp1 = False
-                else:
-                    winp1 = True
 
             for hp in listp2:
                 if hp.HP > 0:
                     winp2 = False
-                else:
-                    winp2 = True
 
             clock.tick(30)
 
@@ -766,22 +819,24 @@ def main_game(screen, button, BackGround_Game):
                 count = 0
                 if Turn == "P1":
                     for i in listp1:
-                        count += 1
-                        x = 700
-                        y = 400 + (50 * count)
-                        b = 150
-                        h = 50
-                        name = i.Name + " - HP: " + str(i.HP)
-                        gamebutton.listBoats(screen, x, y, b, h, name, i)
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoats(screen, x, y, b, h, name, i)
                 elif Turn == "P2":
                     for i in listp2:
-                        count += 1
-                        x = 700
-                        y = 400 + (50 * count)
-                        b = 150
-                        h = 50
-                        name = i.Name + " - HP: " + str(i.HP)
-                        gamebutton.listBoats(screen, x, y, b, h, name, i)
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoats(screen, x, y, b, h, name, i)
             else:
                 if Turn == "P1":
                     for i in listp1:
@@ -790,10 +845,18 @@ def main_game(screen, button, BackGround_Game):
                                 gamebutton.TurnDefence(screen, 900, 550, 100, 70)
                             else:
                                 gamebutton.TurnAttack(screen, 900, 550, 100, 70)
+                elif Turn == "P2":
+                    for i in listp2:
+                        if i.Selected == True:
+                            if i.Defence == False:
+                                gamebutton.TurnDefence(screen, 900, 550, 100, 70)
+                            else:
+                                gamebutton.TurnAttack(screen, 900, 550, 100, 70)
+
                 gamebutton.ToSelect(screen, 750, 550, 100, 70)
                 gamebutton.Up(screen, 750, 450, 100, 70)
                 gamebutton.Down(screen, 900, 450, 100, 70)
-                gamebutton.Fire(screen, 750, 650, 100, 70)
+                gamebutton.Fire(screen, 750, 650, 100, 70, Rangelist)
 
             if Turn == "P1":
                 tekst = "Player 1's turn"
@@ -808,17 +871,14 @@ def main_game(screen, button, BackGround_Game):
 
 
             if winp1 == True or winp2 == True:
-                print("There is a winner")
+                global game
                 if game == True:
-                    pass
-                    '''
                     if winp1 == True:
                         upload_score("P1", turncount1)
                     elif winp2 == True:
                         upload_score("P2", turncount2)
-                    global game
                     game = False
-                    '''
+
 
                 screen.fill(GREEN)
                 gamebutton.winscreentext(screen,"victory")
