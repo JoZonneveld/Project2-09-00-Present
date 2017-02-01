@@ -6,6 +6,7 @@ Turn = "P1"
 clicked = True
 game = True
 ChooseBoat = False
+text = ""
 CardUsed = False
 CardActivated = False
 
@@ -25,6 +26,7 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global clicked
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
@@ -36,22 +38,42 @@ class GameButtons:
                 for a in listp1:
                     if a.Selected == True:
                         if a.Fired == False:
+                            text = "You missed"
                             for r in Rangelist:
                                 for i in listp2:
                                     hit = False
                                     for Position in range(0, len(i.PositionList)):
                                         if r[0] == i.PositionList[Position].x and r[1] == i.PositionList[Position].y:
                                             hit = True
-                                            print("Hit")
+                                if hit == True:
+                                    i.Hit()
+                                    if i.HP == 0:
+                                        text = "You have destroyed " + i.Name
+                                    else:
+                                        text = "You hit " + i.Name
+
+                            a.Fire()
+            elif Turn == "P2":
+                for a in listp2:
+                    if a.Selected == True:
+                        if a.Fired == False:
+                            text = "You missed"
+                            for r in Rangelist:
+                                for i in listp1:
+                                    hit = False
+                                    for Position in range(0, len(i.PositionList)):
+                                        if r[0] == i.PositionList[Position].x and r[1] == i.PositionList[Position].y:
+                                            hit = True
                                     if hit == True:
-                                        print("Hit2")
                                         i.Hit()
+                                        if i.HP == 0:
+                                            text = "You have destroyed " + i.Name
+                                        else:
+                                            text = "You hit " + i.Name
                             a.Fire()
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -59,7 +81,7 @@ class GameButtons:
         textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
-    def Up(self, screen, x, y, b, h):
+    def Up(self, screen, x, y, b, h, tekst):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -80,18 +102,16 @@ class GameButtons:
                     if i.Selected == True:
                         i.MoveUp()
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("Up", smallText)
+        textSurf, textRect = self.text_objects(tekst, smallText)
         textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
-    def Down(self, screen, x, y, b, h):
+    def Down(self, screen, x, y, b, h, tekst):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -112,14 +132,12 @@ class GameButtons:
                     if i.Selected == True:
                         i.MoveDown()
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
-        textSurf, textRect = self.text_objects("Down", smallText)
+        textSurf, textRect = self.text_objects(tekst, smallText)
         textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
@@ -156,6 +174,7 @@ class GameButtons:
 
         global clicked
         global ChooseBoat
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -165,12 +184,11 @@ class GameButtons:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             boat.Select()
             boat.changeColor()
+            text = "Selected " + boat.Name
             clicked = False
             ChooseBoat = True
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 12)
@@ -183,6 +201,7 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global clicked
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -194,15 +213,15 @@ class GameButtons:
                 for i in listp1:
                     if i.Selected == True:
                         i.TurnAttack()
+                        text = i.Name + " turned to attack"
             elif Turn == "P2":
                 for i in listp2:
                     if i.Selected == True:
                         i.TurnAttack()
+                        text = i.Name + " turned to attack"
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -215,6 +234,7 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global clicked
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -226,15 +246,16 @@ class GameButtons:
                 for i in listp1:
                     if i.Selected == True:
                         i.TurnDefence()
+                        text = i.Name + " turned to defence"
             elif Turn == "P2":
                 for i in listp2:
                     if i.Selected == True:
                         i.TurnDefence()
+                        text = i.Name + " turned to defence"
+
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -257,19 +278,15 @@ class GameButtons:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             if Turn == "P1":
-                print("P1")
                 for i in listp1:
                     i.UnSelect()
             elif Turn == "P2":
-                print("P2")
                 for i in listp2:
                     i.UnSelect()
             ChooseBoat = False
             clicked = False
-            print("Click")
 
         if click[0] != 1 and clicked == False:
-            print("Release")
             clicked = True
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -289,7 +306,15 @@ class GameButtons:
 
         smallText = pygame.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = self.text_objects(tekst, smallText)
-        textRect.center = ((840 + (50 / 2)), (160 + (50 / 2)))
+        textRect.center = (((x+110) + (50 / 2)), ((y+10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
+    def textfeed(self, screen, x, y, b, h, a, tekst):
+        pygame.draw.rect(screen, white, (x, y, b, h))
+
+        smallText = pygame.font.Font("freesansbold.ttf", 14)
+        textSurf, textRect = self.text_objects(tekst, smallText)
+        textRect.center = (((x+(a*3)) + (50 / 2)), ((y+10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
 
@@ -300,6 +325,7 @@ class GameButtons:
         global Turn
         global ChooseBoat
         global clicked
+        global text
         global CardUsed
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
@@ -309,6 +335,11 @@ class GameButtons:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             # endturn(screen)
+            if Turn == "P1":
+                player = "Player 1"
+            else:
+                player = "Player 2"
+            text = player + " ended their turn"
             if Turn == "P1":
                 global turncount1
                 turncount1 += 1
@@ -325,11 +356,7 @@ class GameButtons:
                 CardUsed = False
             clicked = False
             ChooseBoat = False
-            print("Click")
-
         if click[0] != 1 and clicked == False:
-            print("Release")
-
             clicked = True
 
 
@@ -379,7 +406,6 @@ class GameButtons:
             screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
             screen.blit(image, pygame.Rect((imagex2, imagey2),(imagew2, imageh2)))
             clicked = True
-            print("Released")
 
             if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1 and clicked == True:
                 if Turn == "P1":
@@ -555,46 +581,6 @@ def main_game(screen, button, BackGround_Game):
                 self.Fired = False
                 self.Color = self.ColorReset
 
-            def Move(self, Direction):
-                if Direction == "UP":
-                    if self.Row > 0:
-                        if self.CollisionCheck("UP") == False:
-                            self.Row -= 1
-
-                elif Direction == "LEFT":
-                    if self.Column > 0:
-                        if self.CollisionCheck("LEFT") == False:
-                            self.Column -= 1
-
-                elif Direction == "RIGHT":
-                    if self.Column < MapSize - 1:
-                        if self.CollisionCheck("RIGHT") == False:
-                            self.Column += 1
-
-                elif Direction == "DOWN":
-                    if self.Row < MapSize - 1:
-                        if self.CollisionCheck("DOWN") == False:
-                            self.Row += 1
-
-                Map.update()
-
-            def CollisionCheck(self, Direction):
-                if Direction == "UP":
-                    if len(Map.Grid[self.Column][(self.Row) - 1]) > 1:
-                        return True
-                elif Direction == "LEFT":
-                    if len(Map.Grid[self.Column - 1][(self.Row)]) > 1:
-                        return True
-                elif Direction == "RIGHT":
-                    if len(Map.Grid[self.Column + 1][(self.Row)]) > 1:
-                        return True
-                elif Direction == "DOWN":
-                    if len(Map.Grid[self.Column][(self.Row) + 1]) > 1:
-                        return True
-                return False
-
-            def Location(self):
-                print("Coordinates: " + str(self.Column) + ", " + str(self.Row))
             def AddHP(self):
                 self.HP += 1
             def HitHP(self):
@@ -937,9 +923,27 @@ def main_game(screen, button, BackGround_Game):
                             else:
                                 gamebutton.TurnAttack(screen, 900, 550, 100, 70)
 
+                textUp = "Up"
+                textDown = "Down"
+
+                if Turn == "P1":
+                    for i in listp1:
+                        if i.Selected == True:
+                            if i.Defence == True:
+                                textUp = "Left"
+                                textDown = "Right"
+
+
+                elif Turn == "P2":
+                    for i in listp2:
+                        if i.Selected == True:
+                            if i.Defence == True:
+                                textUp = "Left"
+                                textDown = "Right"
+
                 gamebutton.ToSelect(screen, 750, 550, 100, 70)
-                gamebutton.Up(screen, 750, 450, 100, 70)
-                gamebutton.Down(screen, 900, 450, 100, 70)
+                gamebutton.Up(screen, 750, 450, 100, 70, textUp)
+                gamebutton.Down(screen, 900, 450, 100, 70, textDown)
                 gamebutton.Fire(screen, 750, 650, 100, 70, Rangelist)
 
             if Turn == "P1":
@@ -947,11 +951,15 @@ def main_game(screen, button, BackGround_Game):
             elif Turn == "P2":
                 tekst = "Player 2's turn"
 
+            test = 0
+            for a in range(1, len(text)+1):
+                test = a
 
             button.Back(screen, 900, 25, 100, 70, "Quit")
             gamebutton.DrawCard(screen, 900, 650, 100, 70)
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
+            gamebutton.textfeed(screen, 710, 220, 300, 70, test, text)
 
 
             if winp1 == True or winp2 == True:
