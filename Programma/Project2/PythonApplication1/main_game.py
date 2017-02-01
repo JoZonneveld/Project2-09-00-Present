@@ -87,6 +87,7 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global clicked
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -97,10 +98,20 @@ class GameButtons:
             if Turn == "P1":
                 for i in listp1:
                     if i.Selected == True:
+                        if i.Move != 0:
+                            if tekst == "Up":
+                                text = i.Name + " moved up"
+                            else:
+                                text = i.Name + " moved left"
+
                         i.MoveUp()
             elif Turn == "P2":
                 for i in listp2:
                     if i.Selected == True:
+                        if tekst == "Up":
+                            text = i.Name + " moved up"
+                        else:
+                            text = i.Name + " moved left"
                         i.MoveUp()
             clicked = False
 
@@ -117,6 +128,7 @@ class GameButtons:
         click = pygame.mouse.get_pressed()
 
         global clicked
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -127,6 +139,10 @@ class GameButtons:
             if Turn == "P1":
                 for i in listp1:
                     if i.Selected == True:
+                        if tekst == "Down":
+                            text = i.Name + " moved down"
+                        else:
+                            text = i.Name + " moved right"
                         i.MoveDown()
             elif Turn == "P2":
                 for i in listp2:
@@ -246,13 +262,19 @@ class GameButtons:
             if Turn == "P1":
                 for i in listp1:
                     if i.Selected == True:
+                        if i.Move != 0:
+                            text = i.Name + " turned to attack"
+                        else:
+                            text = "This boat has no turns left"
                         i.TurnAttack()
-                        text = i.Name + " turned to attack"
             elif Turn == "P2":
                 for i in listp2:
                     if i.Selected == True:
+                        if i.Move != 0:
+                            text = i.Name + " turned to attack"
+                        else:
+                            text = "This boat has no turns left"
                         i.TurnAttack()
-                        text = i.Name + " turned to attack"
             clicked = False
 
         if click[0] != 1 and clicked == False:
@@ -279,13 +301,21 @@ class GameButtons:
             if Turn == "P1":
                 for i in listp1:
                     if i.Selected == True:
+                        if i.Move != 0:
+                            text = i.Name + " turned to defence"
+                        else:
+                            text = "This boat has no turns left"
                         i.TurnDefence()
-                        text = i.Name + " turned to defence"
+
             elif Turn == "P2":
                 for i in listp2:
                     if i.Selected == True:
+                        if i.Move != 0:
+                            text = i.Name + " turned to defence"
+                        else:
+                            text = "This boat has no turns left"
                         i.TurnDefence()
-                        text = i.Name + " turned to defence"
+
 
             clicked = False
 
@@ -731,6 +761,15 @@ def main_game(screen, button, BackGround_Game):
                                                          (TileMargin + TileHeight) * y + TileMargin,
                                                          TileWidth,
                                                          TileHeight])
+                else:
+                    for positionnumber in range(0, len(list.PositionList)):
+                        x = list.PositionList[positionnumber].x
+                        y = list.PositionList[positionnumber].y
+                        color = BLACK
+                        pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                         (TileMargin + TileHeight) * y + TileMargin,
+                                                         TileWidth,
+                                                         TileHeight])
 
             for list in listp2:
                 if list.HP > 0:
@@ -738,6 +777,15 @@ def main_game(screen, button, BackGround_Game):
                         x = list.PositionList[positionnumber].x
                         y = list.PositionList[positionnumber].y
                         color = list.Color
+                        pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
+                                                         (TileMargin + TileHeight) * y + TileMargin,
+                                                         TileWidth,
+                                                         TileHeight])
+                else:
+                    for positionnumber in range(0, len(list.PositionList)):
+                        x = list.PositionList[positionnumber].x
+                        y = list.PositionList[positionnumber].y
+                        color = BLACK
                         pygame.draw.rect(screen, color, [(TileMargin + TileWidth) * x + TileMargin,
                                                          (TileMargin + TileHeight) * y + TileMargin,
                                                          TileWidth,
@@ -890,11 +938,11 @@ def main_game(screen, button, BackGround_Game):
             winp2 = True
             for hp in listp1:
                 if hp.HP > 0:
-                    winp1 = False
+                    winp2 = False
 
             for hp in listp2:
                 if hp.HP > 0:
-                    winp2 = False
+                    winp1 = False
 
             clock.tick(30)
 
@@ -1026,6 +1074,7 @@ def main_game(screen, button, BackGround_Game):
             if winp1 == True or winp2 == True:
                 global game
                 if game == True:
+                    print("WRM WERKT DIT NIET")
                     if winp1 == True:
                         upload_score("P1", turncount1)
                     elif winp2 == True:
@@ -1034,7 +1083,7 @@ def main_game(screen, button, BackGround_Game):
 
 
                 screen.fill(GREEN)
-                gamebutton.winscreentext(screen,"victory")
+                gamebutton.winscreentext(screen,"Victory")
                 button.Back(screen, 900, 25, 100, 70, "Back")
 
             pygame.display.flip()
