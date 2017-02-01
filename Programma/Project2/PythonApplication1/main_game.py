@@ -295,29 +295,41 @@ class GameButtons:
         image = pygame.image.load("gif/card.jpg").convert()
 
         global Furgo_SaltireP1
-        global clicked
+        global Santa_BettinaP2
+        global Turn
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
         else:
             pygame.draw.rect(screen, green, (x, y, b, h))
 
-        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1:
             if self.showCard == True:
                 self.showCard = False
             else:
                 self.showCard = True
             print("Click")
-            clicked = False
 
-        if  click[0] != 1 and self.showCard == False and clicked == False:
+
+        if  click[0] != 1 and self.showCard == False:
             screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
-            clicked = True
+
             print("Released")
 
         if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1:
+            if Turn == "P1":
+                global turncount1
+                turncount1 += 1
+                for i in listp1:
+                    i.EndTurn()
+                Furgo_SaltireP1.AddHP()
+            elif Turn == "P2":
+                global turncount2
+                turncount2 += 1
+                for i in listp2:
+                    i.EndTurn()
+                Santa_BettinaP2.AddHP()
             self.showCard = True
-            Furgo_SaltireP1.AddHP()
 
 
         smallText = pygame.font.Font("freesansbold.ttf", 18)
@@ -480,7 +492,7 @@ def main_game(screen, button, BackGround_Game):
             def Location(self):
                 print("Coordinates: " + str(self.Column) + ", " + str(self.Row))
             def AddHP(self):
-                self.HP += 1
+                self.HP = self.HP + 1
 
         class Map(object):
             global MapSize
