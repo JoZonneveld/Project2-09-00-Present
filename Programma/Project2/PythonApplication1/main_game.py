@@ -18,6 +18,30 @@ class GameButtons:
         textSurface = font.render(text, True, (0, 0, 0))
         return textSurface, textSurface.get_rect()
 
+    def Fire(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_red, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, red, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("FIRE!", smallText)
+        textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
+
     def Up(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -110,6 +134,29 @@ class GameButtons:
         textRect.center = (((x + 50) +(50 / 2)), (y + (50 / 2)))
         screen.blit(textSurf, textRect)
 
+    def TurnAttack(self, screen, x, y, b, h):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            clicked = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 20)
+        textSurf, textRect = self.text_objects("Attack", smallText)
+        textRect.center = (((x+20) + (50 / 2)), ((y+10) + (50 / 2)))
+        screen.blit(textSurf, textRect)
 
     def TurnDefence(self, screen, x, y, b, h):
         mouse = pygame.mouse.get_pos()
@@ -344,7 +391,7 @@ def main_game(screen, button, BackGround_Game):
                 self.Color = white
 
             def TurnDefence(self):
-                if self.Defence == False:
+                if self.Move != 0:
                     self.sum = 0
                     self.count = 0
 
@@ -357,6 +404,9 @@ def main_game(screen, button, BackGround_Game):
                     for new in self.PositionList:
                         new.y = int(self.avg)
                     self.Defence = True
+                    self.VRange += 1
+                    self.HRange = 0
+                    self.Move -= 1
 
             def MoveUp(self):
                 self.able = True
@@ -466,7 +516,7 @@ def main_game(screen, button, BackGround_Game):
             # AmadeaP1 = Character("Amadea ", GREEN, 4, 1, [Vector(5, 20), Vector(5, 19), Vector(5, 18), Vector(5, 17)], 4, 4)
 
             # Bigger boats
-            Silver_whisperP1 = Character("Silver whisper", GREEN, 3, 2, [Vector(7, 20), Vector(7, 19), Vector(7, 18)], 3, 3)
+            Silver_whisperP1 = Character("Silver whisper", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
             # Windsurf_Sea_SpiritP1 = Character("Windsurf Sea Spirit", GREEN, 3, 2, [Vector(9, 20), Vector(9, 19), Vector(9, 18)], 3, 3)
             # IntensityP1 = Character("Intensity", GREEN, 3, 2, [Vector(11, 20), Vector(11, 19), Vector(11, 18)], 3, 3)
 
@@ -488,7 +538,7 @@ def main_game(screen, button, BackGround_Game):
             global Santa_BettinaP2
 
             # MerapiP2 = Character("Merapi", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)], 4, 4)
-            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(5, 0), Vector(5, 1), Vector(5, 2), Vector(5, 3)],4, 4)
+            AmadeaP2 = Character("Amadea ", RED, 4, 1, [Vector(3, 0), Vector(3, 1), Vector(3, 2), Vector(3, 3)],4, 4)
 
             # Bigger boats
             # Silver_whisperP2 = Character("Silver whisper", RED, 3, 2, [Vector(7, 0), Vector(7, 1), Vector(7, 2)], 3, 3)
@@ -551,7 +601,146 @@ def main_game(screen, button, BackGround_Game):
                                                      (TileMargin + TileHeight) * y + TileMargin,
                                                      TileWidth,
                                                      TileHeight])
+            if Turn == "P1":
+                RangelistTop = []
+                for i in listp1:
+                    if i.Selected == True:
+                        if i.Defence == False:
+                            ymaxTop = 0
+                            yminBot = 21
+                            for positionnumber in range(0, len(i.PositionList)):
+                                if ymaxTop < i.PositionList[positionnumber].y:
+                                    ymaxTop = i.PositionList[positionnumber].y
 
+                                if yminBot > i.PositionList[positionnumber].y:
+                                    yminBot = i.PositionList[positionnumber].y
+
+                                for a in range(1, (i.HRange + 1)):
+                                    y = i.PositionList[positionnumber].y
+                                    x = (i.PositionList[positionnumber].x + a)
+
+                                    if x >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                for a in range(1, (i.HRange + 1)):
+                                    y = i.PositionList[positionnumber].y
+                                    x = (i.PositionList[positionnumber].x - a)
+
+                                    if x >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                xas = i.PositionList[positionnumber].x
+                            for a in range(1, (i.VRange+1)):
+                                y = yminBot - a
+                                x = xas
+
+                                if y >= 0:
+                                    pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                 (TileMargin + TileHeight) * y + TileMargin,
+                                                                 TileWidth,
+                                                                 TileHeight])
+                            for a in range(1, (i.VRange + 1)):
+                                y = ymaxTop + a
+                                x = xas
+                                if y < 21:
+                                    pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                (TileMargin + TileHeight) * y + TileMargin,
+                                                                TileWidth,
+                                                                TileHeight])
+
+                        elif i.Defence == True:
+                            for positionnumber in range(0, len(i.PositionList)):
+                                for a in range(1, (i.VRange + 1)):
+                                    y = (i.PositionList[positionnumber].y + a)
+                                    x = i.PositionList[positionnumber].x
+
+                                    if y < 21:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                for a in range(1, (i.VRange + 1)):
+                                    y = (i.PositionList[positionnumber].y - a)
+                                    x = i.PositionList[positionnumber].x
+
+                                    if y >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+            elif Turn == "P2":
+                for i in listp2:
+                    if i.Selected == True:
+                        if i.Defence == False:
+                            ymaxTop = 0
+                            yminBot = 21
+                            for positionnumber in range(0, len(i.PositionList)):
+                                if ymaxTop < i.PositionList[positionnumber].y:
+                                    ymaxTop = i.PositionList[positionnumber].y
+
+                                if yminBot > i.PositionList[positionnumber].y:
+                                    yminBot = i.PositionList[positionnumber].y
+
+                                for a in range(1, (i.HRange + 1)):
+                                    y = i.PositionList[positionnumber].y
+                                    x = (i.PositionList[positionnumber].x + a)
+
+                                    if x >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                for a in range(1, (i.HRange + 1)):
+                                    y = i.PositionList[positionnumber].y
+                                    x = (i.PositionList[positionnumber].x - a)
+
+                                    if x >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                xas = i.PositionList[positionnumber].x
+                            for a in range(1, (i.VRange+1)):
+                                y = yminBot - a
+                                x = xas
+
+                                if y >= 0:
+                                    pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                 (TileMargin + TileHeight) * y + TileMargin,
+                                                                 TileWidth,
+                                                                 TileHeight])
+                            for a in range(1, (i.VRange + 1)):
+                                y = ymaxTop + a
+                                x = xas
+                                if y < 21:
+                                    pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                (TileMargin + TileHeight) * y + TileMargin,
+                                                                TileWidth,
+                                                                TileHeight])
+                        elif i.Defence == True:
+                            for positionnumber in range(0, len(i.PositionList)):
+                                for a in range(1, (i.VRange + 1)):
+                                    y = (i.PositionList[positionnumber].y + a)
+                                    x = i.PositionList[positionnumber].x
+
+                                    if y >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
+                                for a in range(1, (i.VRange + 1)):
+                                    y = (i.PositionList[positionnumber].y - a)
+                                    x = i.PositionList[positionnumber].x
+
+                                    if y >= 0:
+                                        pygame.draw.rect(screen, grey, [(TileMargin + TileWidth) * x + TileMargin,
+                                                                        (TileMargin + TileHeight) * y + TileMargin,
+                                                                        TileWidth,
+                                                                        TileHeight])
 
 
             for hp in listp1:
@@ -594,10 +783,17 @@ def main_game(screen, button, BackGround_Game):
                         name = i.Name + " - HP: " + str(i.HP)
                         gamebutton.listBoats(screen, x, y, b, h, name, i)
             else:
-                gamebutton.TurnDefence(screen, 900, 400, 100, 70)
-                gamebutton.ToSelect(screen, 750, 400, 100, 70)
-                gamebutton.Up(screen, 750, 550, 100, 70)
-                gamebutton.Down(screen, 900, 550, 100, 70)
+                if Turn == "P1":
+                    for i in listp1:
+                        if i.Selected == True:
+                            if i.Defence == False:
+                                gamebutton.TurnDefence(screen, 900, 550, 100, 70)
+                            else:
+                                gamebutton.TurnAttack(screen, 900, 550, 100, 70)
+                gamebutton.ToSelect(screen, 750, 550, 100, 70)
+                gamebutton.Up(screen, 750, 450, 100, 70)
+                gamebutton.Down(screen, 900, 450, 100, 70)
+                gamebutton.Fire(screen, 750, 650, 100, 70)
 
             if Turn == "P1":
                 tekst = "Player 1's turn"
@@ -606,7 +802,7 @@ def main_game(screen, button, BackGround_Game):
 
 
             button.Back(screen, 900, 25, 100, 70, "Quit")
-            gamebutton.DrawCard(screen, 900, 450, 100, 70)
+            gamebutton.DrawCard(screen, 900, 650, 100, 70)
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
             gamebutton.PlayerTurn(screen, 710, 150, 300, 70, tekst)
 
