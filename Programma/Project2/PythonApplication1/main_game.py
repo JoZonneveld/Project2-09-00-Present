@@ -8,7 +8,8 @@ game = True
 ChooseBoat = False
 text = ""
 CardUsed = False
-CardActivated = False
+CardActivatedDef = False
+CardActivatedOff = False
 
 global turncount1
 turncount1 = 0
@@ -141,12 +142,38 @@ class GameButtons:
         textRect.center = (((x + 10) + (50 / 2)), ((y + 10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
-    def listBoatsEnemy(self, screen, x, y, b, h, tekst, boat):
+    def listBoatsDef(self, screen, x, y, b, h, tekst, boat):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
         global clicked
-        global CardActivated
+        global CardActivatedDef
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
+            pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
+        else:
+            pygame.draw.rect(screen, white, (x, y, b, h))
+
+        if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
+            boat.AddHP()
+            clicked = False
+            CardActivatedDef = False
+            print("Click")
+
+        if click[0] != 1 and clicked == False:
+            print("Release")
+            clicked = True
+
+        smallText = pygame.font.Font("freesansbold.ttf", 12)
+        textSurf, textRect = self.text_objects(tekst, smallText)
+        textRect.center = (((x + 50) +(50 / 2)), (y + (50 / 2)))
+        screen.blit(textSurf, textRect)
+    def listBoatsOff(self, screen, x, y, b, h, tekst, boat):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        global clicked
+        global CardActivatedOff
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -156,7 +183,7 @@ class GameButtons:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             boat.HitHP()
             clicked = False
-            CardActivated = True
+            CardActivatedOff = False
             print("Click")
 
         if click[0] != 1 and clicked == False:
@@ -379,7 +406,8 @@ class GameButtons:
         imagew2 = 125
         imageh2 = 175
 
-        image = pygame.image.load("gif/card.jpg").convert()
+        imagedef = pygame.image.load("gif/carddef.jpg").convert()
+        imageoff = pygame.image.load("gif/cardoff.jpg").convert()
 
         global Furgo_SaltireP1
         global Santa_BettinaP2
@@ -388,7 +416,8 @@ class GameButtons:
         global clicked
         global turncount1
         global turncount2
-        global CardActivated
+        global CardActivatedOff
+        global CardActivatedDef
         global ChooseBoat
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
@@ -403,37 +432,32 @@ class GameButtons:
 
 
         if  self.showCard == False:
-            screen.blit(image, pygame.Rect((imagex, imagey),(imagew, imageh)))
-            screen.blit(image, pygame.Rect((imagex2, imagey2),(imagew2, imageh2)))
+            screen.blit(imagedef, pygame.Rect((imagex, imagey),(imagew, imageh)))
+            screen.blit(imageoff, pygame.Rect((imagex2, imagey2),(imagew2, imageh2)))
             clicked = True
 
             if imagex + imagew > mouse[0] > imagex and imagey + imageh > mouse[1] > imagey and click[0] == 1 and clicked == True:
                 if Turn == "P1":
                     turncount1 += 1
-                    print("test")
-                    CardActivated = True
-                    ChooseBoat = False
+                    CardActivatedDef = True
                 elif Turn == "P2":
                     turncount2 += 1
-                    CardActivated = True
-                    ChooseBoat = False
+                    CardActivatedDef = True
                 self.showCard = True
                 clicked == False
             if imagex2 + imagew2 > mouse[0] > imagex2 and imagey2 + imageh2 > mouse[1] > imagey2 and click[0] == 1 and clicked == True:
                 if Turn == "P1":
                     turncount1 += 1
-                    CardActivated = True
-                    ChooseBoat = False
+                    CardActivatedOff = True
                 elif Turn == "P2":
                     turncount2 += 1
-                    CardActivated = True
-                    ChooseBoat = False
+                    CardActivatedOff = True
                 self.showCard = True
                 clicked == False
 
 
-        smallText = pygame.font.Font("freesansbold.ttf", 18)
-        textSurf, textRect = self.text_objects("Draw card", smallText)
+        smallText = pygame.font.Font("freesansbold.ttf", 15)
+        textSurf, textRect = self.text_objects("Show cards", smallText)
         textRect.center = (((x+20) + (50 / 2)), ((y+10) + (50 / 2)))
         screen.blit(textSurf, textRect)
 
@@ -865,26 +889,50 @@ def main_game(screen, button, BackGround_Game):
             gamebutton.EndTurn(screen, 900, 300, 100, 70)
 
             #Sjors van Gelderen had toestemming gegeven om 3 boten te plaatsen per speler
-            if CardActivated == True:
+            if CardActivatedOff == True:
                 count = 0
                 if Turn == "P1":
                     for i in listp2:
-                        count += 1
-                        x = 700
-                        y = 400 + (50 * count)
-                        b = 150
-                        h = 50
-                        name = i.Name + " - HP: " + str(i.HP)
-                        gamebutton.listBoatsEnemy(screen, x, y, b, h, name, i)
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoatsOff(screen, x, y, b, h, name, i)
                 elif Turn == "P2":
                     for i in listp1:
-                        count += 1
-                        x = 700
-                        y = 400 + (50 * count)
-                        b = 150
-                        h = 50
-                        name = i.Name + " - HP: " + str(i.HP)
-                        gamebutton.listBoatsEnemy(screen, x, y, b, h, name, i)
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoatsOff(screen, x, y, b, h, name, i)
+            elif CardActivatedDef == True:
+                count = 0
+                if Turn == "P1":
+                    for i in listp1:
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoatsDef(screen, x, y, b, h, name, i)
+                elif Turn == "P2":
+                    for i in listp2:
+                        if i.HP > 0:
+                            count += 1
+                            x = 700
+                            y = 400 + (50 * count)
+                            b = 150
+                            h = 50
+                            name = i.Name + " - HP: " + str(i.HP)
+                            gamebutton.listBoatsDef(screen, x, y, b, h, name, i)
             elif ChooseBoat == False:
                 count = 0
                 if Turn == "P1":
