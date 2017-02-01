@@ -6,7 +6,7 @@ Turn = "P1"
 clicked = True
 game = True
 ChooseBoat = False
-text = ""
+text = "Start the game, Select a boat"
 CardUsed = False
 CardActivatedDef = False
 CardActivatedOff = False
@@ -366,7 +366,7 @@ class GameButtons:
                 player = "Player 1"
             else:
                 player = "Player 2"
-            text = player + " ended their turn"
+            text = player + " ended their turn. Select a boat"
             if Turn == "P1":
                 global turncount1
                 turncount1 += 1
@@ -419,6 +419,7 @@ class GameButtons:
         global CardActivatedOff
         global CardActivatedDef
         global ChooseBoat
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_green, (x, y, b, h))  # hor, vert, length, height
@@ -428,6 +429,7 @@ class GameButtons:
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and CardUsed == False and self.showCard == True:
             self.showCard = False
             CardUsed = True
+            text = "Pick a card"
             print("Click")
 
 
@@ -650,7 +652,7 @@ def main_game(screen, button, BackGround_Game):
 
             # Big boats
             Furgo_SaltireP1 = Character("Furgo Saltire", GREEN, 2, 3, [Vector(13, 10), Vector(13, 9)], 2, 2)
-            # Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
+            Santa_BettinaP1 = Character("Santa Bettina", GREEN, 2, 3, [Vector(15, 20), Vector(15, 19)], 2, 2)
             global listp1
             listp1 = [MerapiP1, Silver_whisperP1, Furgo_SaltireP1]
 
