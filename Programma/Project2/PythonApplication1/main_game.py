@@ -148,6 +148,7 @@ class GameButtons:
 
         global clicked
         global CardActivatedDef
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -156,6 +157,7 @@ class GameButtons:
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y and click[0] == 1 and clicked == True:
             boat.AddHP()
+            text = "Added 1 health to " + boat.Name
             clicked = False
             CardActivatedDef = False
             print("Click")
@@ -174,6 +176,7 @@ class GameButtons:
 
         global clicked
         global CardActivatedOff
+        global text
 
         if x + b > mouse[0] > x and y + h > mouse[1] > y:  # hor, vert
             pygame.draw.rect(screen, hover_white, (x, y, b, h))  # hor, vert, length, height
@@ -184,6 +187,10 @@ class GameButtons:
             boat.HitHP()
             clicked = False
             CardActivatedOff = False
+            if boat.HP == 0:
+                text = "Destroyed " + boat.Name
+            else:
+                text = "Damaged " + boat.Name
             print("Click")
 
         if click[0] != 1 and clicked == False:
@@ -442,18 +449,22 @@ class GameButtons:
                 if Turn == "P1":
                     turncount1 += 1
                     CardActivatedDef = True
+                    text = "Select one of boats to add health"
                 elif Turn == "P2":
                     turncount2 += 1
                     CardActivatedDef = True
+                    text = "Select one of boats to add health"
                 self.showCard = True
                 clicked == False
             if imagex2 + imagew2 > mouse[0] > imagex2 and imagey2 + imageh2 > mouse[1] > imagey2 and click[0] == 1 and clicked == True:
                 if Turn == "P1":
                     turncount1 += 1
                     CardActivatedOff = True
+                    text = "Select one of the enemy boats to damage"
                 elif Turn == "P2":
                     turncount2 += 1
                     CardActivatedOff = True
+                    text = "Select one of the enemy boats to damage"
                 self.showCard = True
                 clicked == False
 
